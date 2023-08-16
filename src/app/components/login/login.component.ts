@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { UserStoreService } from '../services/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,10 @@ eyeIcon: string = "fa-eye-slash";
 
 loginForm!: FormGroup;
 
-  constructor (private fb: FormBuilder, private auth: AuthService, private router: Router){}
+  constructor (private fb: FormBuilder, 
+              private auth: AuthService, 
+              private router: Router,
+              private userStore: UserStoreService){}
 
   ngOnInit(): void { 
     this.loginForm = this.fb.group({
@@ -39,6 +43,9 @@ loginForm!: FormGroup;
         next: (res => {
           this.loginForm.reset();
           this.auth.storeToken(res.token);
+          const tokenPayload = this.auth.decodeToken();
+          this.userStore.setEmailForStore(tokenPayload.email);
+          this.userStore.setRoleForStore(tokenPayload.role);
           this.router.navigate(['dashboard'])
         }),
         error: (err => {

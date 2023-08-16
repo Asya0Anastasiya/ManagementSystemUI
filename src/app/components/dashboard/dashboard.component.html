@@ -1,6 +1,32 @@
-<p>dashboard works!</p>
-<button (click)="logOut()" class = "btn btn-danger">Log out</button>
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">Navbar</a>
+    <div>
+        <h4>Hello, {{email}}</h4>
+    </div>
+</nav>
+<ng-container *ngIf="role === 'Admin'">
+    <h2>Employee List</h2>
+</ng-container>
 
-<ul *ngFor="let user of users">
-    <li>{{user.email}}</li>
-</ul>
+<div>
+    <table id="customers">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button (click)="logOut()" class="button button5">Log Out</button>
