@@ -1,0 +1,24 @@
+<div class="container my-5">
+    <h2 class="mb-3">Employees</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td><a [routerLink]="['userDetail', user.email]">Details</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
