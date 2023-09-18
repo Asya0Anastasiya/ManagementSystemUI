@@ -29,10 +29,10 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "scripts": [],
             "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -92,10 +92,10 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "scripts": [],
             "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+            ]
           }
         }
       }

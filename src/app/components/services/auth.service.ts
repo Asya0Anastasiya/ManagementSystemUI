@@ -54,4 +54,10 @@ export class AuthService {
     if (this.userPayload)
     return this.userPayload.role;
   }
+
+  getIdFromToken(){
+    if (this.userPayload){
+      return this.userPayload.nameid;
+    }
+  }
 }

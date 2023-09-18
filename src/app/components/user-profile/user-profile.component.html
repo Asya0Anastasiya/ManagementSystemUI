@@ -1,0 +1,343 @@
+<user-navbar></user-navbar>
+<section style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-8">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-4">
+              <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                  <img src="{{url}}"
+                    alt="Generic placeholder image" class="img-fluid"
+                    style="width: 180px; border-radius: 10px;" />
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h4 class="mb-1">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
+                  <p class="mb-2 pb-1" style="color: #2b2a2a;">
+                    {{userDetails.email}}
+                  </p>
+                  <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                    style="background-color: #efefef;">
+                    <div>
+                      <p class="small text-muted mb-1">
+                        Working days
+                      </p>
+                      <p class="mb-0">{{userDetails.workDays}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">
+                        Sick days
+                      </p>
+                      <p class="mb-0">{{userDetails.sickDays}}</p>
+                    </div>
+                    <div>
+                      <p class="small text-muted mb-1">
+                        Paid days
+                      </p>
+                      <p class="mb-0">{{userDetails.paidDays}}</p>
+                    </div>
+                  </div>
+                  <div class="d-flex pt-1">
+                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 btn-border-green">
+                      Chat
+                    </button>
+                    <button type="button" class="btn btn-primary flex-grow-1 btn-green">
+                      Follow
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <div class="container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+            <th> </th>
+            <th scope="col">Date</th>
+          <th scope="col">Hours</th>
+          <th scope="col">Accounting type</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+    <tbody>
+        <tr *ngFor="let day of days;" class="pb-1">
+            <td><input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" /></td>
+            <td>{{day.day}}.{{day.month}}.{{day.year}}</td>
+            <td scope="row">{{day.hours}}</td> -->
+            <!-- <td>{{day.accountingType}}</td> -->
+            <!-- <div class="">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-light-green" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Action
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Work</a></li>
+                    <li><a class="dropdown-item" href="#">Sick</a></li>
+                    <li><a class="dropdown-item" href="#">Holiday</a></li> -->
+                    <!-- <li><hr class="dropdown-divider" /></li> -->
+                    <!-- <li><a class="dropdown-item" href="#">Vocation</a></li>
+                  </ul>
+            </div>
+            <td>{{day.isConfirmed}}</td>
+        </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary me-md-2 btn-green" type="button">Submit</button>
+  </div>
+
+  <div class="container text-center mt-4 pt-3 pb-2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+  </div> -->
+
+
+
+
+  <!-- <div class=" d-flex-inline justify-content-evenly">
+    <form [formGroup]="dayForm" *ngFor="let form of forms; let i = index"
+      class="w-25 p-3 rounded border border-5 mt-5 mb-5">
+      <label>
+        <input type="checkbox" [(ngModel)]="selectedForms">
+      </label>
+      <div class="form-outline mb-4">
+        <input type="text" id="form3Example1q" class="form-control border-bottom border-1 border-dark readonly" />
+        <label class="form-label" for="form3Example1q">{{i + 1}}.{{now.getMonth()}}.{{now.getFullYear()}}</label>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+    
+          <div class="form-outline datepicker">
+            <input formControlName="hours" type="text" class="form-control border-bottom border-1 border-dark"
+              id="exampleDatepicker1" />
+            <label for="exampleDatepicker1" class="form-label">Hours</label>
+          </div>
+    
+        </div>
+        <div class="col-md-6 mb-4">
+    
+          <select formControlName="accountingType" class="select">
+            <option value="1">Work</option>
+            <option value="2">Vocation</option>
+            <option value="3">Sick</option>
+            <option value="4">Holiday</option>
+          </select>
+    
+        </div>
+      </div>
+    </form>
+  </div>
+  
+    <div (click)="submitSelectedForms()" class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary me-md-2 btn-green" type="button">Submit</button>
+  </div> -->
+
+  <section class="h-100 h-custom" style="background: linear-gradient(to top, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+
+    
+
+    <div class="container py-5 h-100">
+      <div class="container text-center rounded-3  mb-5 pt-3 pb-2 col-8" style="background-color: white;">
+        <h2>{{month}}</h2>
+      </div>
+    
+      <!-- <mat-tab-group>
+        <mat-tab label="Today"> 
+          <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
+            <div class="col-lg-8 col-xl-6" >
+              <div class="card rounded-3">
+                <div class="card-body p-4 p-md-5">
+                  <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Send day to approve</h2> 
+                  <form [formGroup]="dayForm" class="px-md-2" >              
+                        <div class="row align-items-center pt-4 pb-3">
+                          <div class="col-md-3 ps-5">              
+                            <h4  class="mb-0">Hours</h4>              
+                          </div>
+                          <div class="col-md-9 pe-5">              
+                            <input formControlName="hours" type="text" class="form-control form-control-lg" />              
+                          </div>
+                        </div>              
+                        <hr class="mx-n3">
+                        <div class="row align-items-center pt-4 pb-3">
+                          <div class="col-md-3 ps-5">              
+                            <h4  class="mb-0">Date</h4>             
+                          </div>
+                          <div class="col-md-9 pe-5">
+                            <mat-form-field>
+                              <mat-label>Choose a date</mat-label>
+                              <input formControlName="date" matInput [matDatepicker]="picker">
+                              <mat-hint>MM/DD/YYYY</mat-hint>
+                              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        
+                        <hr class="mx-n3">
+                        <div class="row align-items-center pt-4 pb-3">
+                          <div class="col-md-3 ps-5">              
+                            <h4 class="mb-0">Accounting type</h4>              
+                          </div>
+                          <div class="col-md-9 pe-5">              
+                              <select formControlName="accountingType" class="select form-control form-control-lg">
+                                <option value="1">Work</option>
+                                <option value="2">Vocation</option>
+                                <option value="3">Sick</option>
+                                <option value="4">Holiday</option>
+                              </select>                
+                          </div>
+                        </div>
+                        <div class="text-center pt-5">
+                          <button (click)="postDay()" type="submit" class="btn btn-success btn-lg mb-1 btn-green">Submit</button>           
+                        </div>
+                  </form> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="This week"> 
+              <div class="container pt-4" >
+                <table class="table table-hover align-middle mb-0" style="border-collapse: collapse; border-radius: 1em; overflow: hidden;">
+                  
+                  <thead class="bg-light">
+                    <tr>
+                      <th> </th>
+                      <th>Date</th>
+                      <th>Hours</th>
+                      <th>Accounting type</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of rows; let i = index;">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <input (change)="onCheckboxChange($event, i)" *ngIf="row.status === 'No info'" type="checkbox">
+                        </div>
+                      </td>
+                      <td>
+                            <label  for="exampleDatepicker1" class="form-label">{{row.date}}</label>
+                      </td>
+                      <td>
+                        <label  for="exampleDatepicker1" class="form-label">{{row.hours}}</label>
+                      </td>
+                      <td>
+                        <label  for="exampleDatepicker1" class="form-label">{{row.type}}</label>
+                      </td>
+                      <td>
+                        <div  class="rounded-pill me-5 text-center h-50" [style.background-color]="row.color">
+                          {{row.status}}
+                        </div>
+                      </td>
+                      <td>
+                        <button type="button" mat-stroked-button color="accent" style="border-color: #0b4c3f;">
+                          Button
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                
+                </table>
+            
+                <mat-paginator
+              #paginator
+              [length]="totalData"
+              [pageSizeOptions]="[5, 7, 10, 15]"
+              showFirstLastButtons
+              class="mt-3 mb-3"
+              style="border-collapse: collapse; border-radius: 1em; overflow: hidden;"></mat-paginator>
+              </div>             
+          <button mat-raised-button (click)="onSubmit()">Submit</button>
+        </mat-tab>
+      </mat-tab-group> -->
+      <div class="container pt-4" >
+        <mat-form-field class="mb-0">
+          <mat-label>Select month</mat-label>
+          <mat-select>
+            <mat-option (onSelectionChange)="selectionChange(month.value)" *ngFor="let month of months" [value]="month.value">
+              {{month.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <table class="table table-hover align-middle mb-0 mt-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">         
+          <thead class="bg-light">
+            <tr style="text-align: center;">
+              <th> </th>
+              <th>Date</th>
+              <th>Hours</th>
+              <th>Accounting type</th>
+              <th>Status</th>
+              <!--<th>Actions</th>-->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows; let i = index;" style="text-align: center;">
+              <td>
+                <div class="d-flex align-items-center">
+                  <input (change)="onCheckboxChange($event, i)" *ngIf="row.status === 'No info'" type="checkbox">
+                </div>
+              </td>
+              <td>
+                    <label  for="exampleDatepicker1" class="form-label">{{row.date}}</label>
+              </td>
+              <td>
+                <label  for="exampleDatepicker1" class="form-label">{{row.hours}}</label>
+              </td>
+              <td>
+                <label  for="exampleDatepicker1" class="form-label">{{row.type}}</label>
+              </td>
+              <td>
+                <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
+                  {{row.status}}
+                </div>
+              </td>
+              <!--<td>
+                <button type="button" mat-stroked-button color="accent" style="border-color: #0b4c3f;">
+                  Button
+                </button>
+              </td>-->
+            </tr>
+          </tbody>
+        
+        </table>
+    
+        <mat-paginator
+      #paginator
+      [length]="totalData"
+      [pageSizeOptions]="[5, 7, 10, 15]"
+      showFirstLastButtons
+      class=" mb-3"
+      style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+      </div>    
+      <div class="ps-3">
+        <button mat-raised-button (click)="onSubmit()">Submit</button>
+      </div>     
+        
+    </div> 
+  </section>
+
+
+  
+
+

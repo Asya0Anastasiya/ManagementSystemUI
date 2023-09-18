@@ -49,7 +49,7 @@ loginForm!: FormGroup;
           this.router.navigate(['dashboard'])
         }),
         error: (err => {
-          alert(err?.error.message);
+          alert(err?.error);
         })
       });
     } else{

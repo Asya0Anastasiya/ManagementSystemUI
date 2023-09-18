@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   constructor(private auth: AuthService, private api: ApiService, private userStore: UserStoreService){}
 
   ngOnInit(): void {
-    this.api.getUsers()
+    /*this.api.getUsers(1,5)
     .subscribe(res =>{
       this.users = res;
 
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
         const emailFromToken = this.auth.getEmailFromToken();
         this.email = val || emailFromToken;
       })
-    })
+    })*/
 
     this.userStore.getRoleFromStore()
     .subscribe(val =>{
@@ -35,9 +35,5 @@ export class DashboardComponent implements OnInit {
       this.role = val || roleFromToken;
     })
 
-  }
-
-  logOut(){
-    this.auth.signout();
   }
 }

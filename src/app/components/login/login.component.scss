@@ -1,3 +1,12 @@
 .outer{
     background: linear-gradient(to top, #c9c9ff 50%, #772c94 90%) no-repeat;
 }
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+

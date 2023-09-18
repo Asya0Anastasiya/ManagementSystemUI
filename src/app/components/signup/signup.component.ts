@@ -24,7 +24,11 @@ export class SignupComponent implements OnInit {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      department: ['', Validators.required],
+      position: ['', Validators.required],
+      level: ['', Validators.required],
+      phone: ['', Validators.required]
     })
     }
 
@@ -51,5 +55,9 @@ export class SignupComponent implements OnInit {
     this.isText = !this.isText;
     this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
     this.isText ? this.type = "text" : this.type = "password";
+  }
+
+  resetForm(){
+
   }
 }

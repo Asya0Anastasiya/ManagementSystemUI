@@ -1,24 +1,160 @@
-<div class="container my-5">
-    <h2 class="mb-3">Employees</h2>
+<user-navbar></user-navbar>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Email</th>
-                <th> </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users; let i = index">
-                <td>{{i + 1}}</td>
-                <td>{{user.firstName}}</td>
-                <td>{{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td><a [routerLink]="['userDetail', user.email]">Details</a></td>
-            </tr>
-        </tbody>
+<body class="pb-3">
+<section class="vh-100">
+  <div class="container pt-5">
+    <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team</h2>
+    <mat-expansion-panel
+                       style="border-collapse: collapse; border-radius: 1em; overflow: hidden;">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Search panel
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1m">First name</label>
+            <input formControlName="firstname" type="text" id="form3Example1m"
+              class="form-control form-control-lg"  />
+          </div>
+        </div>
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1n">Last name</label>
+            <input formControlName="lastname" type="text" id="form3Example1n"
+              class="form-control form-control-lg" />
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1n">Email</label>
+            <input formControlName="email" type="email" id="form3Example1n"
+              class="form-control form-control-lg" />
+          </div>
+        </div>
+      </div>
+      <div>
+        
+      </div>
+      <button (click)="onSearch()" mat-raised-button class="mt-4" style="background-color: #2c584a; color: white; width: 28%;">Search</button>
+    </form>
+  </mat-expansion-panel> 
+
+    <table class="table table-hover align-middle mb-0 mt-3" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+      <thead class="bg-light">
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th *ngIf="role === 'Admin'">Status</th>
+          <th>Level</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                  [src]="user.url"
+                  alt=""
+                  style="width: 45px; height: 45px"
+                  class="rounded-circle"
+                  />
+              <div class="ms-3">
+                <p class="fw-bold mb-1">{{user.firstName}} {{user.lastName}}</p>
+                <p class="text-muted mb-0">{{user.email}}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{user.position}}</p>
+            <p class="text-muted mb-0">{{user.department}}</p>
+          </td>
+          <td *ngIf="role === 'Admin'">
+            <div [matBadge]="user.unConfirmedDaysCount" style="width: 60%;" matBadgePosition="above" matBadgeColor="accent" class="demo-section"><a mat-button [routerLink]="['userDetail', user.id]">Require confirmation</a></div>
+          </td>
+          <td>{{user.level}}</td>
+          <td>
+            <button type="button" mat-stroked-button color="accent" style="border-color: #0b4c3f;">
+              <a [routerLink]="['userInfo', user.id]" style="text-decoration: none;  color: #0b4c3f;">Details</a>
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+
+    <mat-paginator
+  #paginator
+  [length]="totalData"
+  [pageSizeOptions]="[5, 10, 15]"
+  showFirstLastButtons
+  style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+  </div>  
+
+  <!--<div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#flush-collapseOne"
+        aria-expanded="false"
+        aria-controls="flush-collapseOne"
+      >
+        Search Panel
+      </button>
+    </h2>
+    <div
+      id="flush-collapseOne"
+      class="accordion-collapse collapse"
+      aria-labelledby="flush-headingOne"
+      data-mdb-parent="#accordionFlushExample"
+    >
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1m">First name</label>
+            <input formControlName="firstname" type="text" id="form3Example1m"
+              class="form-control form-control-lg"  />
+          </div>
+        </div>
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1n">Last name</label>
+            <input formControlName="lastname" type="text" id="form3Example1n"
+              class="form-control form-control-lg" />
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1n">Email</label>
+            <input formControlName="email" type="email" id="form3Example1n"
+              class="form-control form-control-lg" />
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-4" style="width: 30%;">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1n">Email</label>
+            <input formControlName="email" type="email" id="form3Example1n"
+              class="form-control form-control-lg" />
+          </div>
+        </div>
+      </div>
+      <div>
+        
+      </div>
+      <button mat-raised-button class="mt-4" style="background-color: #2c584a; color: white; width: 28%;">Search</button>
+    </form>
+    </div>
+  </div>-->
+</section>
+</body>
+
+
+

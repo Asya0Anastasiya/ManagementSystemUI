@@ -2,3 +2,22 @@
     background: linear-gradient(to top, #c9c9ff 50%, #214970 90%) no-repeat;
 }
 
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+
+    .btn-green {
+        background-color: #459182;
+        color: white;
+    }
+
+    .btn-green-light {
+        background-color: #e4e4e4;
+        color: #459182;
+    }

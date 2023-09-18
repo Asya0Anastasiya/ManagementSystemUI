@@ -14,26 +14,27 @@ export class DaysService {
 
   private baseUrl: string = "https://localhost:44367/api/DayAccounting/";
 
-  getUsersDaysInfo(userId: string) : Observable<UsersDaysInfo> {
-    return this.http.get<UsersDaysInfo>(`${this.baseUrl}getUsersDaysInfo/${userId}/month/12/year/2023`);
+  getUsersDaysInfo(userId: string, month: number, year: number) : Observable<UsersDaysInfo> {
+    return this.http.get<UsersDaysInfo>(`${this.baseUrl}getUsersDaysInfo/${userId}/month/${month}/year/${year}`);
   }
 
-  approveDay(dayAccounting: DaysAccounting){
-    return this.http.put<DaysAccounting>(`${this.baseUrl}approveDay`, dayAccounting);
+  approveDay(id: string){
+    return this.http.get<DaysAccounting>(`${this.baseUrl}approveDay/${id}`);
   }
 
-  getUsersDays(httpParams: HttpParams) : Observable<DaysAccounting[]> {
-    debugger
-    return this.http.get<DaysAccounting[]>(`${this.baseUrl}getUsersDays/pageNumber/1/pageSize/5`, {params: httpParams});
+  getUsersDays(httpParams: HttpParams, pageNumber: number, pageSize: number) {
+    return this.http.get(`${this.baseUrl}getUsersDays/pageNumber/${pageNumber}/pageSize/${pageSize}`, { observe: 'response', params: httpParams });
   }
 
   postDay(dayObj: any) : Observable<DaysAccounting> {
-    debugger
     return this.http.post<DaysAccounting>(`${this.baseUrl}addDay`, dayObj);
   }
 
   postDays(dayObjs: DaysAccounting[]) : Observable<DaysAccounting[]> {
-    debugger
     return this.http.post<DaysAccounting[]>(`${this.baseUrl}addDays`, dayObjs);
+  }
+
+  getUnconfirmedDaysCount(id: string) : Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}getUnconfirmedDaysCount/${id}`);
   }
 }

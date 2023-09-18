@@ -1,4 +1,4 @@
-<div class="outer">
+<!-- <div class="outer">
     <div class="container">
         <div class="row">
             <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
@@ -41,16 +41,107 @@
                             <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/login">Login</a></div>
                         </form>
                     </div>
-                    <!-- <div class="mx-3 my-2 py-2 bordert">
-                        <div class="text-center py-3">
-                            <a href="https://www.google.com" target="_blank" class="px-2"><img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"></a>
-                            <a href="https://www.github.com" target="_blank" class="px-2"><img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png"></a>
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
         </div>
     </div>
-</div>
+</div> -->
+
+<section class="h-100" style="background: linear-gradient(to top, #1a7873 30%, #b2e3e0 90%) no-repeat;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card card-registration my-4">
+            <div class="row g-0">
+              <div class="col-xl-6 d-none d-xl-block">
+                <img src="https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGNhdCUyMGFuZ3J5fGVufDB8MXwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                  alt="Sample photo" class="img-fluid"
+                  style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+              </div>
+              <div class="col-xl-6">
+                <div class="card-body p-md-5 text-black">
+                    
+                  <!-- <h3 class="mb-5 text-uppercase">Add new Employee here</h3> -->
+                  <span class="h3 fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Add new Employee here</span>
+                  <form [formGroup]="signUpForm" class="mt-5">
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline" [class.error]="signUpForm.controls['firstname'].dirty && signUpForm.hasError('required', 'firstname')">
+                          <label class="form-label" for="form3Example1m">First name</label>
+                          <input formControlName="firstname" type="text" id="form3Example1m" class="form-control form-control-lg" />
+                          <small *ngIf="signUpForm.controls['firstname'].dirty && signUpForm.hasError('required', 'firstname')" class="text-danger">*FirstName is required</small>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline" [class.error]="signUpForm.controls['lastname'].dirty && signUpForm.hasError('required', 'lastname')">
+                          <label class="form-label" for="form3Example1n">Last name</label>
+                          <input formControlName="lastname" type="text" id="form3Example1n" class="form-control form-control-lg" />
+                          <small *ngIf="signUpForm.controls['lastname'].dirty && signUpForm.hasError('required', 'lastname')" class="text-danger">*LastName is required</small>
+                        </div>
+                      </div>
+                    </div>
+  
+  
+                    <div class="form-outline mb-4" [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required', 'email')">
+                      <label class="form-label" for="form3Example8">Email</label>
+                      <input formControlName="email" type="text" id="form3Example8" class="form-control form-control-lg" />
+                      <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required', 'email')" class="text-danger">*Email is required</small>
+                    </div>
+  
+    
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline" [class.error]="signUpForm.controls['department'].dirty && signUpForm.hasError('required', 'department')">
+                          <label class="form-label" for="form3Example1m1">Department</label>
+                          <input formControlName="department" type="text" id="form3Example1m1" class="form-control form-control-lg" />
+                          <small *ngIf="signUpForm.controls['department'].dirty && signUpForm.hasError('required', 'department')" class="text-danger">*Department is required</small>
+                        </div>
+  
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline" [class.error]="signUpForm.controls['position'].dirty && signUpForm.hasError('required', 'position')">
+                          <label class="form-label" for="form3Example1n1">Position</label>
+                          <input formControlName="position" type="text" id="form3Example1n1" class="form-control form-control-lg" />
+                          <small *ngIf="signUpForm.controls['position'].dirty && signUpForm.hasError('required', 'position')" class="text-danger">*Position is required</small>
+                        </div>
+                      </div>
+                    </div>
+    
+                    <div class="form-outline mb-4" [class.error]="signUpForm.controls['level'].dirty && signUpForm.hasError('required', 'level')">
+                      <label class="form-label" for="form3Example9">Level</label>
+                      <input formControlName="level" type="text" id="form3Example9" class="form-control form-control-lg" />
+                      <small *ngIf="signUpForm.controls['level'].dirty && signUpForm.hasError('required', 'level')" class="text-danger">*Level is required</small>
+                    </div>
+    
+                    <div class="form-outline mb-4" [class.error]="signUpForm.controls['phone'].dirty && signUpForm.hasError('required', 'phone')">
+                      <label class="form-label" for="form3Example90">Phone</label>
+                      <input formControlName="phone" type="text" id="form3Example90" class="form-control form-control-lg" />
+                      <small *ngIf="signUpForm.controls['phone'].dirty && signUpForm.hasError('required', 'phone')" class="text-danger">*Phone is required</small>
+                    </div>
+    
+                    <div class="form-outline mb-4" [class.error]="signUpForm.controls['password'].dirty && signUpForm.hasError('required', 'password')">
+                      <label class="form-label" for="form3Example9">
+                        Password   <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                      </label>
+                      <input formControlName="password" [type]="type" id="form3Example9" class="form-control form-control-lg" />
+                      <small *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required', 'password')" class="text-danger">*Password is required</small>
+                    </div>
+  
+                    <div class="d-flex justify-content-end pt-3">
+                      <button (click)="resetForm()" type="button" class="btn btn-green-light btn-lg">Reset all</button>
+                      <button (click)="onSignUp()" type="submit" class="btn btn-green btn-lg ms-2">Submit form</button>
+                    </div>
+                  </form>
+                  
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 

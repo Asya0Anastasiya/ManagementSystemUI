@@ -1,42 +1,42 @@
-<form>
+<!--<form>
   <div class="form-group row">
     <label for="firstName" class="col-sm-2 col-form-label">FirstName</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.firstName}}">
+      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.firstName}}">
     </div>
   </div>
   <div class="form-group row">
     <label for="lastName" class="col-sm-2 col-form-label">LastName</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.lastName}}">
+      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.lastName}}">
     </div>
   </div>
   <div class="form-group row">
     <label for="email" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.email}}">
+      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.email}}">
     </div>
   </div>
   <div class="form-group row">
     <label for="dateOfBirth" class="col-sm-2 col-form-label">BirthDay</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.dateOfBirth}}">
+      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.dateOfBirth}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="workDays" class="col-sm-2 col-form-label">Working days</label>
+    <a routerLink="usersDays" for="workDays" class="col-sm-2 col-form-label">Working days</a>
     <div class="col-sm-10">
       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.workDays}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="sickDays" class="col-sm-2 col-form-label">Sick Days</label>
+    <a for="sickDays" class="col-sm-2 col-form-label">Sick Days</a>
     <div class="col-sm-10">
       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.sickDays}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="holidays" class="col-sm-2 col-form-label">Holidays</label>
+    <a for="holidays" class="col-sm-2 col-form-label">Holidays</a>
     <div class="col-sm-10">
       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.holidays}}">
     </div>
@@ -48,3 +48,117 @@
     </div>
   </div>
 </form>
+
+<button (click)="deleteUser(userDetails.id)"><span class="fa fa-solid fa-trash"></span></button>
+<button (click)="updateUser()"><span class="fa fa-solid fa-trash"></span></button> -->
+
+<user-navbar></user-navbar>
+<section  class="h-100 pb-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-8">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex text-black">
+              <div class="flex-shrink-0">
+                <img src="{{url}}"
+                  alt="Generic placeholder image" class="img-fluid"
+                  style="width: 180px; border-radius: 10px;" />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h3 class="mb-1">{{userDetails.firstName}} {{userDetails.lastName}}</h3>
+                <p class="mb-2 pb-1" style="color: #2b2a2a;">
+                  {{userDetails.email}}
+                </p>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                  style="background-color: #efefef;">
+                  <div>
+                    <p class="small text-muted mb-1">
+                      Working days
+                    </p>
+                    <p class="mb-0">{{userDetails.workDays}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">
+                      Sick days
+                    </p>
+                    <p class="mb-0">{{userDetails.sickDays}}</p>
+                  </div>
+                  <div>
+                    <p class="small text-muted mb-1">
+                      Paid days
+                    </p>
+                    <p class="mb-0">{{userDetails.paidDays}}</p>
+                  </div>
+                </div>
+                <div class="d-flex pt-1">
+                  <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 btn-border-green">
+                    Chat
+                  </button>
+                  <button type="button" class="btn btn-primary flex-grow-1 btn-green">
+                    Follow
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <table class="table mb-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Hours</th>
+          <th scope="col">Accounting type</th>
+          <th scope="col">Status</th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows;">
+          <td>{{row.date}}</td>
+          <th scope="row">{{row.hours}}</th>
+          <td>{{row.type}}</td>
+          <td>{{row.status}}</td>
+          <td><button class="btn btn-rounded btn-green" *ngIf="row.status==='Not confirmed'" (click)="approveDay(row.id)">Confirm</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator
+  #paginator
+  [length]="totalData"
+  [pageSizeOptions]="[5, 10, 15]"
+  showFirstLastButtons
+  style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+  </div>
+</section>
+
+<!-- Upload image-->
+
+ <!-- <div class="row align-items-center py-3">
+  
+  <div class="col-md-9 pe-5">
+
+    <input class="form-control form-control-lg" id="formFileLg" type="file" (change)="onFileSelected($event)" />
+    <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file
+      size 50 MB</div>
+
+  </div>
+</div>
+
+<hr class="mx-n3">
+
+<div class="px-5 py-4">
+  <button (click)="onUpload()" class="btn btn-primary btn-lg">Send image</button>
+</div> -->
+
+
+
+
+
+
+            
