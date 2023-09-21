@@ -2,7 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DaysAccounting } from 'src/app/models/daysAccounting.model';
-import { DaysFiltering } from 'src/app/models/daysFiltering.model';
 import { UsersDaysInfo } from 'src/app/models/usersDaysInfo.model';
 
 @Injectable({
@@ -12,7 +11,7 @@ export class DaysService {
 
   constructor(private http: HttpClient) {}
 
-  private baseUrl: string = "https://localhost:44367/api/DayAccounting/";
+  private baseUrl: string = "https://localhost:7199/";
 
   getUsersDaysInfo(userId: string, month: number, year: number) : Observable<UsersDaysInfo> {
     return this.http.get<UsersDaysInfo>(`${this.baseUrl}getUsersDaysInfo/${userId}/month/${month}/year/${year}`);

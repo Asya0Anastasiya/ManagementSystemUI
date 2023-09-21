@@ -39,7 +39,6 @@ export class EmployeesComponent implements OnInit {
         const idFromToken = this.auth.getIdFromToken();
         this.id = val || idFromToken;
       });
-      debugger
       this.userStore.getRoleFromStore()
         .subscribe(val => {
           const roleFromToken = this.auth.getRoleFromToken();
@@ -96,7 +95,7 @@ export class EmployeesComponent implements OnInit {
   initiateUserImage(id: string) : string {
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
-      this.url = imageUrl;
+      //this.url = imageUrl;
       console.log('j');
       return imageUrl;
     });
