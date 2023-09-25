@@ -110,7 +110,7 @@
   <div class="container mt-5">
     <table class="table mb-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
       <thead>
-        <tr>
+        <tr style="text-align: center;">
           <th scope="col">Date</th>
           <th scope="col">Hours</th>
           <th scope="col">Accounting type</th>
@@ -119,12 +119,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of rows;">
+        <tr *ngFor="let row of rows;" style="text-align: center;">
           <td>{{row.date}}</td>
           <th scope="row">{{row.hours}}</th>
           <td>{{row.type}}</td>
-          <td>{{row.status}}</td>
-          <td><button class="btn btn-rounded btn-green" *ngIf="row.status==='Not confirmed'" (click)="approveDay(row.id)">Confirm</button></td>
+          <td>
+            <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
+              {{row.status}}
+            </div>
+          <td>
+            <button mat-raised-button style="background-color: #2c584a; color: white;" [disabled]="row.status==='No info' || row.status==='Confirmed'"  (click)="approveDay(row.id)">Confirm</button>
+            <button style="border-color: red;" class="ms-2" mat-stroked-button color="warn" [disabled]="row.status==='No info'" (click)="removeDay(row.id)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>

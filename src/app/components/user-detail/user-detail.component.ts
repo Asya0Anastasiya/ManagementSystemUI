@@ -150,10 +150,14 @@ export class UserDetailComponent implements OnInit {
         let asd = new Date(this.days[j].date);
         if (rowDay.getDate() === asd.getDate()){
           this.rows[i].hours = this.days[j].hours;
+          this.rows[i].id = this.days[j].id;
           this.rows[i].status = (this.days[j].isConfirmed == true) ? "Confirmed" : "Not confirmed";
           this.rows[i].color = (this.days[j].isConfirmed == true) ? "#1a773c" : "#da4057";
           if (this.days[j].accountingType === 1) {
             this.rows[i].type = 'Work';
+          }
+          else if (this.days[j].accountingType === 2) {
+            this.rows[i].type = 'Sick day';
           }
           break;
         }
@@ -194,7 +198,17 @@ export class UserDetailComponent implements OnInit {
     this.daysService.approveDay(id).subscribe({
       next: (response) =>
       console.log("ok")
-    })
+    });
+    window.location.reload();
+  }
+
+  removeDay(id: string) {
+    this.daysService.removeDay(id).subscribe({
+      next: (response) => {
+        console.log("ok");
+      }
+    });
+    window.location.reload();
   }
 
   getCurrentMonth() : string {

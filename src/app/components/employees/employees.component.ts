@@ -46,7 +46,7 @@ export class EmployeesComponent implements OnInit {
         })
 
     // передавать айди каждого юзера, а не текущего
-    this.initiateUserImage(this.id);
+    //this.initiateUserImage(this.id);
     //this.ngAfterViewInit();
   }
 
@@ -74,13 +74,13 @@ export class EmployeesComponent implements OnInit {
         this.users = empData;
       }   
       for ( let i = 0; i < this.users.length; i++) {
-        this.users[i].url = this.initiateUserImage(this.users[i].id);
         this.daysService.getUnconfirmedDaysCount(this.users[i].id).subscribe({
           next: res => {
             this.users[i].unConfirmedDaysCount = res;
           }
         })
       }   
+      this.initiateUsersImages(this.users);
     })
   }
 
@@ -92,13 +92,17 @@ export class EmployeesComponent implements OnInit {
         this.ngAfterViewInit(httpParams);
   }
 
-  initiateUserImage(id: string) : string {
-    this.api.getUserImage(id).subscribe(response => {
-      const imageUrl = URL.createObjectURL(response);
-      //this.url = imageUrl;
-      console.log('j');
-      return imageUrl;
-    });
-    return '';
+  initiateUsersImages(users: Employee[]) {
+    for (let i = 0; i < users.length; i++) {
+      users[i].url = "../../../assets/img/catNews.jpg";
+      this.api.getUserImage(users[i].id).subscribe(response => {
+        if (response.toString() != "Image not found") {
+          const imageUrl = URL.createObjectURL(response);
+          users[i].url = imageUrl;
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 }

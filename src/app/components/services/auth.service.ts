@@ -10,6 +10,7 @@ export class AuthService {
 
   private baseUrl: string = "https://localhost:7199/";
   private userPayload: any;
+  
   constructor(private http: HttpClient, private router: Router) { 
     this.userPayload = this.decodeToken();
   }

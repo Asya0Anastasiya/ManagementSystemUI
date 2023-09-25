@@ -36,4 +36,8 @@ export class DaysService {
   getUnconfirmedDaysCount(id: string) : Observable<number> {
     return this.http.get<number>(`${this.baseUrl}getUnconfirmedDaysCount/${id}`);
   }
+
+  removeDay(id: string) {
+    return this.http.delete(`${this.baseUrl}removeDay/${id}`);
+  }
 }

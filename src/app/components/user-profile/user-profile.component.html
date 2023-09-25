@@ -271,68 +271,96 @@
           <button mat-raised-button (click)="onSubmit()">Submit</button>
         </mat-tab>
       </mat-tab-group> -->
-      <div class="container pt-4" >
-        <mat-form-field class="mb-0">
-          <mat-label>Select month</mat-label>
-          <mat-select>
-            <mat-option (onSelectionChange)="selectionChange(month.value)" *ngFor="let month of months" [value]="month.value">
-              {{month.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <table class="table table-hover align-middle mb-0 mt-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">         
-          <thead class="bg-light">
-            <tr style="text-align: center;">
-              <th> </th>
-              <th>Date</th>
-              <th>Hours</th>
-              <th>Accounting type</th>
-              <th>Status</th>
-              <!--<th>Actions</th>-->
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of rows; let i = index;" style="text-align: center;">
-              <td>
-                <div class="d-flex align-items-center">
-                  <input (change)="onCheckboxChange($event, i)" *ngIf="row.status === 'No info'" type="checkbox">
-                </div>
-              </td>
-              <td>
-                    <label  for="exampleDatepicker1" class="form-label">{{row.date}}</label>
-              </td>
-              <td>
-                <label  for="exampleDatepicker1" class="form-label">{{row.hours}}</label>
-              </td>
-              <td>
-                <label  for="exampleDatepicker1" class="form-label">{{row.type}}</label>
-              </td>
-              <td>
-                <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
-                  {{row.status}}
-                </div>
-              </td>
-              <!--<td>
-                <button type="button" mat-stroked-button color="accent" style="border-color: #0b4c3f;">
-                  Button
-                </button>
-              </td>-->
-            </tr>
-          </tbody>
+      
+      <mat-tab-group  dynamicHeight>
+        <mat-tab label="Working Days" >
+          <div class="container pt-4" style="max-height: none !important;">
+            <mat-form-field class="mb-0">
+              <mat-label>Select month</mat-label>
+              <mat-select>
+                <mat-option (onSelectionChange)="selectionChange(month.value)" *ngFor="let month of months" [value]="month.value">
+                  {{month.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <table class="table table-hover align-middle mb-0 mt-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">         
+              <thead class="bg-light">
+                <tr style="text-align: center;">
+                  <th> </th>
+                  <th>Date</th>
+                  <th>Hours</th>
+                  <th>Accounting type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rows; let i = index;" style="text-align: center;">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <input (change)="onCheckboxChange($event, i)" *ngIf="row.status === 'No info'" type="checkbox">
+                    </div>
+                  </td>
+                  <td>
+                        <label  for="exampleDatepicker1" class="form-label">{{row.date}}</label>
+                  </td>
+                  <td>
+                    <label  for="exampleDatepicker1" class="form-label">{{row.hours}}</label>
+                  </td>
+                  <td>
+                    <label  for="exampleDatepicker1" class="form-label">{{row.type}}</label>
+                  </td>
+                  <td>
+                    <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
+                      {{row.status}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            
+            </table>
         
-        </table>
-    
-        <mat-paginator
-      #paginator
-      [length]="totalData"
-      [pageSizeOptions]="[5, 7, 10, 15]"
-      showFirstLastButtons
-      class=" mb-3"
-      style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
-      </div>    
-      <div class="ps-3">
-        <button mat-raised-button (click)="onSubmit()">Submit</button>
-      </div>     
+            <mat-paginator
+          #paginator
+          [length]="totalData"
+          [pageSizeOptions]="[5, 7, 10, 15]"
+          showFirstLastButtons
+          class=" mb-3"
+          style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+          </div>    
+          <div class="ps-3">
+            <button mat-raised-button (click)="onSubmit()">Submit</button>
+          </div> 
+        </mat-tab>
+        <mat-tab label="Call a sick">
+          <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
+            <div class="col-lg-8 col-xl-6" >
+              <div class="card rounded-3">
+                <div class="card-body p-4 p-md-5">
+                  <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2" style="font-size: 30px;">Call a sick</h2> 
+                  <form [formGroup]="dayForm" class="px-md-2" >                
+                        <mat-form-field>
+                          <mat-label>Enter a date range</mat-label>
+                          <mat-date-range-input  [rangePicker]="picker">
+                            <input matStartDate formControlName="start" placeholder="Start date">
+                            <input matEndDate formControlName="end" placeholder="End date">
+                          </mat-date-range-input>
+                          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-date-range-picker #picker></mat-date-range-picker>
+                        
+                        </mat-form-field>
+                        
+                        <div class="pt-5">
+                          <button (click)="postDay()" type="submit" class="btn btn-success btn-lg mb-1 btn-green">Submit</button>           
+                        </div>
+                  </form> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+          
         
     </div> 
   </section>

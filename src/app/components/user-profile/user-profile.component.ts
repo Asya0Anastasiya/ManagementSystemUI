@@ -28,9 +28,8 @@ export class UserProfileComponent implements OnInit {
     private daysService: DaysService,
     private router: Router){
       this.dayForm = new FormGroup({
-        hours: new FormControl(),
-        date: new FormControl(),
-        accountingType: new FormControl(),
+        start: new FormControl(),
+        end: new FormControl(),
         userId: new FormControl()
     });
   } 
@@ -152,7 +151,8 @@ export class UserProfileComponent implements OnInit {
         debugger
         this.router.navigate([`profile/${this.id}`]);
       }
-    })
+    });
+    this.daysArray = [];
   }
 
   selectionChange(month: number){
@@ -250,17 +250,31 @@ export class UserProfileComponent implements OnInit {
 
 
   postDay(){
-    if (this.dayForm.valid) {
-      this.dayForm.get('userId')?.setValue(this.id);
-      const formValue = this.dayForm.value;
-      // выполнить отправку данных на сервер
-      this.daysService.postDay(formValue).subscribe({
-        next: (res) => {
-          console.log(res);
-        }
-      })
+    debugger
+    let start = new Date(this.dayForm.get('start')?.value);
+    const end = new Date(this.dayForm.get('end')?.value);
+    while (start <= end ) {
+      const dateSt = new Date(start);
+      const day: DaysAccounting = {
+        hours: 8,
+        date: dateSt,
+        accountingType: 2,
+        userId: this.id,
+        id: '',
+        isConfirmed: false
+      }
+      this.daysArray.push(day);
+      start.setDate(start.getDate() + 1);
     }
-    
+    this.daysService.postDays(this.daysArray).subscribe({
+      next: (res) => {
+        //this.router.navigate([`profile/${this.id}`]);
+      },
+      error:  (err => {
+        alert(err?.error);
+      })
+    });
+    this.daysArray = [];
   }
 
 
