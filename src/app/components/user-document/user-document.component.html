@@ -1,0 +1,53 @@
+<user-navbar></user-navbar>
+<section class="vh-100 pt-4" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+    <h2 class="mb-4" style="color: white; font-size: 50px;">Store your documents here</h2>
+    <table class="table table-hover align-middle mb-0 mt-3" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Upload data</th>
+                <th>Size</th>
+                <th>Content type</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let document of documents">
+                <th>{{document.name}}</th>
+                <th>{{document.uploadData}}</th>
+                <th>{{document.size}}</th>
+                <th>{{document.contentType}}</th>
+                <th><button (click)="downloadDocument(document.name)">Download</button></th>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- <div class=" py-3">
+        <div class="col-md-9 pe-5">
+          <input class="form-control form-control-lg" id="formFig" type="file" (change)="onDocumentSelected($event)" style="width: 17%; color: white; margin-left: 61%;" />
+        </div>
+      </div> -->
+
+
+    <form [formGroup]="uploadForm" class="row row-cols-lg-auto g-3 align-items-center mt-4" style="margin-right: 0;">
+        <div class="col-12">
+            <div class="input-group">
+                <input formControlName="uploadFile" class="form-control form-control-lg" id="formFig" type="file" (change)="onDocumentSelected($event)" style="width: 17%;" />
+            </div>
+        </div>
+    
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select formControlName="type" class="select">
+                <option value="1">time_tracking</option>
+                <option value="2">other</option>
+            </select>
+        </div>
+    
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" (click)="onSubmitForm()">Submit</button>
+        </div>
+    </form>
+</section>
+
+

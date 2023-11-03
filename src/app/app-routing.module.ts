@@ -9,6 +9,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { UserDocumentComponent } from './components/user-document/user-document.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'employees/userDetail/:id', component: UserDetailComponent},
   {path: 'profile/:id', component: UserProfileComponent},
   {path: 'edit/:id', component: EditProfileComponent},
-  {path: 'employees/userInfo/:id', component: UserInfoComponent}
+  {path: 'employees/userInfo/:id', component: UserInfoComponent},
+  {path: 'profile/:id/documents', component: UserDocumentComponent}
 ];
 
 @NgModule({

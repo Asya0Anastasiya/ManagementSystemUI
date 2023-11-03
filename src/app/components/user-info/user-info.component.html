@@ -1,14 +1,70 @@
 <user-navbar></user-navbar>
-<section class="vh-100" style="background: linear-gradient(to top, #1a7873 30%, #b2e3e0 90%) no-repeat;">
+<!--<section class="vh-100" style="background: linear-gradient(to top, #1a7873 30%, #b2e3e0 90%) no-repeat;">
     <div class="container py-5 h-100">
         <div class=" d-flex justify-content-center align-items-center h-100 pt-0">
           <div class=" mt-0" style="width: 80%; height: 80%;">
             <div class="card" style="border-radius: 15px; height: 100%;">
-              <div class="card-body p-4">
-                
+              <div class="row justify-content-around" style="height: 100%;">
+                <div class="col-4">
+                  <img src="{{url}}"
+                  alt="Generic placeholder image"
+                  style="width: 100%; height: 60%; border-radius: 40px;" class="mt-5" />
+                </div>
+                <div class="col-4">
+                  One of two columns
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+</section>-->
+
+<section class="vh-100" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-8">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex text-black">
+              <div class="flex-shrink-0">
+                <img src="{{url}}"
+                  alt="Generic placeholder image" class="img-fluid"
+                  style="width: 180px; border-radius: 10px;" />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h3 style="font-size: 25px;" class="mb-1">{{userDetails.firstName}} {{userDetails.lastName}}</h3>
+                <p class="my-3 pb-1" style="color: #2b2a2a;">
+                  Email: {{userDetails.email}}
+                </p>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                  style="background-color: #efefef;">
+                  <label>Position:</label>
+                  <label>{{userDetails.position}}</label>
+                </div>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                  style="background-color: #efefef;">
+                  <label>Department:</label>
+                  <label>{{userDetails.department}}</label>
+                </div>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                  style="background-color: #efefef;">
+                  <label>Branch office:</label>
+                  <label>{{userDetails.branchOffice}}</label>
+                </div>
+                <div class="d-flex pt-1">
+                  <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 btn-border-green">
+                    Chat
+                  </button>
+                  <button type="button" class="btn btn-primary flex-grow-1 btn-green">
+                    Follow
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

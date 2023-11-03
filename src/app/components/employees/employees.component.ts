@@ -9,6 +9,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs';
 import { merge, Observable, of as observableOf, pipe } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DaysService } from '../services/days-service.service';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class EmployeesComponent implements OnInit {
   searchForm!: FormGroup;
   @ViewChild('paginator') paginator!: MatPaginator;
 
-  constructor(private api: ApiService, private userStore: UserStoreService, private auth: AuthService, private fb: FormBuilder, private daysService: DaysService){}
+  constructor(private api: ApiService, private userStore: UserStoreService, private auth: AuthService, 
+              private fb: FormBuilder, private daysService: DaysService, private router: Router){}
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -44,10 +46,10 @@ export class EmployeesComponent implements OnInit {
           const roleFromToken = this.auth.getRoleFromToken();
           this.role = val || roleFromToken;
         })
+  }
 
-    // передавать айди каждого юзера, а не текущего
-    //this.initiateUserImage(this.id);
-    //this.ngAfterViewInit();
+  createEmployee() {
+    this.router.navigate(['signup']);
   }
 
   ngAfterViewInit(httpParams: HttpParams) {
@@ -90,6 +92,14 @@ export class EmployeesComponent implements OnInit {
         httpParams = httpParams.set('lastname', this.searchForm.get('lastname')?.value);
         httpParams = httpParams.set('email', this.searchForm.get('email')?.value);       
         this.ngAfterViewInit(httpParams);
+  }
+
+  clear() {
+    //window.location.reload();
+    //this.searchForm.reset();
+    let httpParams = new HttpParams();
+    this.ngAfterViewInit(httpParams);
+    this.searchForm.reset();
   }
 
   initiateUsersImages(users: Employee[]) {

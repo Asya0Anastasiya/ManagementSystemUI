@@ -5,8 +5,8 @@ import ValidateForm from 'src/app/helpers/validateform';
 import { ApiService } from '../services/api.service';
 import { UserStoreService } from '../services/user-store.service';
 import { AuthService } from '../services/auth.service';
-import { HttpParams } from '@angular/common/http';
 import { ChangePassword } from 'src/app/models/changePassword.model';
+import { DocumentServiceService } from '../services/document-service.service';
 
 
 @Component({
@@ -15,7 +15,8 @@ import { ChangePassword } from 'src/app/models/changePassword.model';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private userStore: UserStoreService, private auth: AuthService) {}
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, 
+              private userStore: UserStoreService, private auth: AuthService, private docService: DocumentServiceService) {}
 
   editForm!: FormGroup;
   passwordForm!: FormGroup;
@@ -61,19 +62,22 @@ export class EditProfileComponent implements OnInit {
       this.api.updateUser(this.editForm.value)
       .subscribe({
         next: (res => {
-          this.router.navigate(['dashboard']);
+          //this.router.navigate(['dashboard']);
         }),
         error: (err => {
-          alert(err?.error.message);
+          alert(err?.error);
         })
       });
-      console.log(this.editForm.value);
+      window.location.reload();
+      //console.log(this.editForm.value);
     } else{
       ValidateForm.validateAllFormFields(this.editForm);
     }
+
   }
 
   initiateUserImage(id: string){
+    this.url = "../../../assets/img/catNews.jpg";
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
       this.url = imageUrl;
@@ -93,25 +97,28 @@ export class EditProfileComponent implements OnInit {
       next: res => {
         
       }
-    })
+    });
+    window.location.reload();
   }
 
   selectedFile!: File;
   
-  onFileSelected(event: any) {
+  onImageSelected(event: any) {
     this.selectedFile = event.target.files[0];
     debugger
-    this.onUpload();
+    this.onImageUpload();
   } 
 
-  onUpload() {
+  onImageUpload() {
     debugger
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     this.api.setUserImage(this.id, formData).subscribe({
       next: (res) => {
+        debugger
         console.log(res);
       }
-    })
+    });
+    window.location.reload();
   }
 }

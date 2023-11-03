@@ -14,6 +14,8 @@ import { merge, Observable, of as observableOf, pipe } from 'rxjs';
 import { RowData } from 'src/app/models/rowData.model';
 import { SelectMonthOptions } from 'src/app/models/selectOptions.model';
 import { Router } from '@angular/router';
+import { SelectDocument } from 'src/app/models/selectDocumentOptions.model';
+import { DocumentServiceService } from '../services/document-service.service';
 
 
 @Component({
@@ -25,13 +27,18 @@ export class UserProfileComponent implements OnInit {
 
   constructor(private api: ApiService, private fb: FormBuilder, 
     private userStore: UserStoreService, private auth: AuthService, 
-    private daysService: DaysService,
+    private daysService: DaysService, private docService: DocumentServiceService,
     private router: Router){
-      this.dayForm = new FormGroup({
+      this.sickDayForm = new FormGroup({
         start: new FormControl(),
         end: new FormControl(),
         userId: new FormControl()
     });
+      this.vocationsForm = new FormGroup({
+        start: new FormControl(),
+        end: new FormControl(),
+        userId: new FormControl()
+      })
   } 
 
 
@@ -43,7 +50,7 @@ export class UserProfileComponent implements OnInit {
     email: '',
     department: '',
     position: '',
-    level: '',
+    branchOffice: '',
     unConfirmedDaysCount: 0,
     phoneNumber: '',
     workDays: 0,
@@ -79,7 +86,8 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  dayForm!: FormGroup;
+  sickDayForm!: FormGroup;
+  vocationsForm!: FormGroup;
   public days: DaysAccounting[] = [];
 
   public url: string = '';
@@ -94,6 +102,8 @@ export class UserProfileComponent implements OnInit {
 
   forms: FormGroup[] = []; 
   rows: RowData[] = [];
+
+  docs: SelectDocument[] = [];
 
   months: SelectMonthOptions[] = [
     {value: 1, viewValue: 'January'},
@@ -127,45 +137,49 @@ export class UserProfileComponent implements OnInit {
     });
 
     this.initiateUserImage(this.id);
-
     this.initiateDayFilteringParams(this.id, '');
-    /*let httpParams = new HttpParams();
-    httpParams = httpParams.set('userId', this.daysFilter.userId);
-    httpParams = httpParams.set('fromDate', `${this.daysFilter.fromDate.getFullYear()}-${this.daysFilter.fromDate.getMonth() + 1}-${this.daysFilter.fromDate.getDate()}`);
-    httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.daysFilter.tillDate.getDate()}`);
-    httpParams = httpParams.set('accountingType', this.daysFilter.accountingType);
-    this.daysService.getUsersDays(httpParams).subscribe({
-      next: days => {
-        this.days = days;
-        this.initiateForms();
-        this.initiateFormsWithDates();
-        this.checkDates();
+    this.docService.getUserDocumentsNames(this.id).subscribe((res: string[]) => {
+      for (let i = 0; i < res.length; i++) {
+        const doc: SelectDocument = {
+          value: res[i],
+          viewValue: res[i]
+        }
+        this.docs.push(doc);
       }
-    });   */ 
+    })
   }
 
-  onSubmit(){
+  attachDocument(name: string, dateStr: string) {
+    debugger
+    const date = new Date(dateStr);
+    this.docService.attachDocument(this.id, date, name).subscribe({
+      next: res => {
+        console.log("ok");
+      }
+    })
+  }
+
+  onSubmit() {
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
         console.log(res);
-        debugger
-        this.router.navigate([`profile/${this.id}`]);
+        //this.router.navigate([`profile/${this.id}`]);
       }
     });
     this.daysArray = [];
+    window.location.reload();
   }
 
-  selectionChange(month: number){
-    console.log(month);
-    this.rows = [];
+  selectionChange(month: number) {
+    debugger
+    //////////// paginator
+    this.now.setMonth(month - 1);
+    this.defineIndex();
+    this.initiateDayFilteringParams(this.id, '');
+    this.ngAfterViewInit();
   }
 
-  onCheckboxChange(e: any, i: number){
-
-      /*this.dayAccounting.hours = this.forms[i].get('hours')?.value,
-      this.dayAccounting.date = new Date(this.forms[i].get('date')?.value),
-      this.dayAccounting.accountingType = this.forms[i].get('accountingType')?.value,
-      this.dayAccounting.userId = this.forms[i].get('userId')?.value*/
+  onCheckboxChange(e: any, i: number) {
       const day: DaysAccounting = {
         hours: this.rows[i].hours,
         date: new Date(this.rows[i].date),
@@ -181,16 +195,21 @@ export class UserProfileComponent implements OnInit {
   checkDates(count: number) {
     for (let i = 0; i < count; i++){
       var rowDay = new Date(this.rows[i].date);
-      for (let j = 0; j < this.days.length; j++){
+      for (let j = 0; j < this.days.length; j++) {
         let asd = new Date(this.days[j].date);
-        if (rowDay.getDate() === asd.getDate()){
+        if (rowDay.getDate() === asd.getDate()) {
           this.rows[i].hours = this.days[j].hours;
           this.rows[i].status = (this.days[j].isConfirmed == true) ? "Confirmed" : "Not confirmed";
           this.rows[i].color = (this.days[j].isConfirmed == true) ? "#1a773c" : "#da4057";
           if (this.days[j].accountingType === 1) {
             this.rows[i].type = 'Work';
           }
-          //this.rows[i].type = this.days[j].accountingType;
+          else if (this.days[j].accountingType === 2) {
+            this.rows[i].type = 'Vocation';
+          }
+          else if (this.days[j].accountingType === 3) {
+            this.rows[i].type = 'Sick day';
+          }
           break;
         }
         else {
@@ -202,8 +221,8 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  initiateForms(){
-    for (let i = 1; i <= this.totalData; i++){
+  initiateForms() {
+    for (let i = 1; i <= this.totalData; i++) {
       this.forms.push(new FormGroup({
         hours: new FormControl(),
         date: new FormControl(),
@@ -215,9 +234,8 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  initiateRowsData(start: number, end: number){
-    for (let i = 0; i < end; i++){
-      
+  initiateRowsData(start: number, end: number) {
+    for (let i = 0; i < end; i++) {  
       this.rows[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
       this.rows[i].hours = 8;
       this.rows[i].type = '';
@@ -226,7 +244,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   initiateRows(count:number) {
-    for (let i = 1; i <= count; i++){
+    for (let i = 1; i <= count; i++) {
       const row: RowData = {
         date: '',
         hours: 0,
@@ -239,8 +257,8 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  initiateFormsWithDates(){
-    for (let i = 1; i < this.totalData; i++){
+  initiateFormsWithDates() {
+    for (let i = 1; i < this.totalData; i++) {
       this.forms[i].get('date')?.setValue(`${this.now.getFullYear()}-${this.now.getMonth() + 1}-${i}`);
       this.forms[i].get('userId')?.setValue(this.id);
       this.forms[i].get('status')?.setValue('No info');
@@ -249,16 +267,43 @@ export class UserProfileComponent implements OnInit {
 
 
 
-  postDay(){
-    debugger
-    let start = new Date(this.dayForm.get('start')?.value);
-    const end = new Date(this.dayForm.get('end')?.value);
+  postSickDays() {
+    let start = new Date(this.sickDayForm.get('start')?.value);
+    const end = new Date(this.sickDayForm.get('end')?.value);
     while (start <= end ) {
       const dateSt = new Date(start);
       const day: DaysAccounting = {
         hours: 8,
         date: dateSt,
-        accountingType: 2,
+        accountingType: 3,
+        userId: this.id,
+        id: '',
+        isConfirmed: true
+      }
+      this.daysArray.push(day);
+      start.setDate(start.getDate() + 1);
+    }
+    this.daysService.postDays(this.daysArray).subscribe({
+      next: (res) => {
+      },
+      error:  (err => {
+        alert(err?.error);
+      })
+    });
+    this.daysArray = [];
+    window.location.reload();
+  }
+
+  postVocations() {
+    debugger
+    let start = new Date(this.vocationsForm.get('start')?.value);
+    const end = new Date(this.vocationsForm.get('end')?.value);
+    while (start <= end ) {
+      const dateSt = new Date(start);
+      const day: DaysAccounting = {
+        hours: 8,
+        date: dateSt,
+        accountingType: 4,
         userId: this.id,
         id: '',
         isConfirmed: false
@@ -268,17 +313,17 @@ export class UserProfileComponent implements OnInit {
     }
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
-        //this.router.navigate([`profile/${this.id}`]);
       },
       error:  (err => {
         alert(err?.error);
       })
     });
     this.daysArray = [];
+    window.location.reload();
   }
 
 
-  defineIndex(){
+  defineIndex() {
     if ([0, 2, 4, 6, 7, 9, 11].includes(this.now.getMonth())) {
       this.totalData = 31;
     }
@@ -290,7 +335,8 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  initiateUserImage(id: string){
+  initiateUserImage(id: string) {
+    this.url = "../../../assets/img/catNews.jpg";
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
       this.url = imageUrl;
@@ -304,19 +350,19 @@ export class UserProfileComponent implements OnInit {
     return months[this.now.getMonth()];
   }
 
-  initiateDayFilteringParams(userId: string, accountingType: string){
-    const now = new Date();
-    if (now.getDate() <= 5) {
-      this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), 1);
+  initiateDayFilteringParams(userId: string, accountingType: string) {
+    //const now = new Date();
+    if (this.now.getDate() <= 5) {
+      this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
+      this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
     }
-    else if (now.getDate() >= 26) {
-      this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), 26);
-      this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), 31);
+    else if (this.now.getDate() >= 26) {
+      this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), 26);
+      this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), 31);
     }
     else {
-      this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-      this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2);
+      this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate() - 2);
+      this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate() + 2);
     }
     this.daysFilter.userId = userId;
     this.daysFilter.accountingType = accountingType;
@@ -350,16 +396,11 @@ export class UserProfileComponent implements OnInit {
     .subscribe((empData: any) => {
       if (empData != null) {
         this.days = empData;
-        //let date = new Date(this.days[this.days.length-1].date);
+        //!!!!!!!! change total data
         this.totalData = this.now.getDate();
-        //this.defineIndex();
-        //this.initiateForms();
-        //this.initiateFormsWithDates();
         this.rows = [];
         this.initiateRows(this.paginator.pageSize);
         this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize);
-
-        //this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize * (this.paginator.pageIndex + 1));
         this.checkDates(this.paginator.pageSize);
       }      
     })

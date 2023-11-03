@@ -23,7 +23,7 @@ export class UserInfoComponent implements OnInit {
     email: '',
     department: '',
     position: '',
-    level: '',
+    branchOffice: '',
     unConfirmedDaysCount: 0,
     phoneNumber: '',
     workDays: 0,
@@ -48,7 +48,7 @@ export class UserInfoComponent implements OnInit {
         this.userDetails.email = response.email;
         this.userDetails.department = response.department;
         this.userDetails.position = response.position;
-        this.userDetails.level = response.level;
+        this.userDetails.branchOffice = response.branchOffice;
       }
     });
 
@@ -56,6 +56,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   initiateUserImage(id: string){
+    this.url = "../../../assets/img/catNews.jpg";
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
       this.url = imageUrl;

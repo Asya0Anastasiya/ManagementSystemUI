@@ -66,7 +66,7 @@
                   style="width: 180px; border-radius: 10px;" />
               </div>
               <div class="flex-grow-1 ms-3">
-                <h3 class="mb-1">{{userDetails.firstName}} {{userDetails.lastName}}</h3>
+                <h3 style="font-size: 20px;" class="mb-1">{{userDetails.firstName}} {{userDetails.lastName}}</h3>
                 <p class="mb-2 pb-1" style="color: #2b2a2a;">
                   {{userDetails.email}}
                 </p>
@@ -115,11 +115,12 @@
           <th scope="col">Hours</th>
           <th scope="col">Accounting type</th>
           <th scope="col">Status</th>
+          <th>Dowmload Document</th>
           <th scope="col"> </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of rows;" style="text-align: center;">
+        <tr *ngFor="let row of rows1;" style="text-align: center;">
           <td>{{row.date}}</td>
           <th scope="row">{{row.hours}}</th>
           <td>{{row.type}}</td>
@@ -127,6 +128,17 @@
             <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
               {{row.status}}
             </div>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Select document</mat-label>
+              <mat-select>
+                <mat-option (onSelectionChange)="downloadDocument(doc)" *ngFor="let doc of row.docs" [value]="doc">
+                  {{doc}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
           <td>
             <button mat-raised-button style="background-color: #2c584a; color: white;" [disabled]="row.status==='No info' || row.status==='Confirmed'"  (click)="approveDay(row.id)">Confirm</button>
             <button style="border-color: red;" class="ms-2" mat-stroked-button color="warn" [disabled]="row.status==='No info'" (click)="removeDay(row.id)">Delete</button>
@@ -142,25 +154,6 @@
   style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
   </div>
 </section>
-
-<!-- Upload image-->
-
- <!-- <div class="row align-items-center py-3">
-  
-  <div class="col-md-9 pe-5">
-
-    <input class="form-control form-control-lg" id="formFileLg" type="file" (change)="onFileSelected($event)" />
-    <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file
-      size 50 MB</div>
-
-  </div>
-</div>
-
-<hr class="mx-n3">
-
-<div class="px-5 py-4">
-  <button (click)="onUpload()" class="btn btn-primary btn-lg">Send image</button>
-</div> -->
 
 
 

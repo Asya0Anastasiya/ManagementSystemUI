@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit {
   }
 
   initiateUserImage(id: string){
+    this.url = "../../../assets/img/catNews.jpg";
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
       this.url = imageUrl;

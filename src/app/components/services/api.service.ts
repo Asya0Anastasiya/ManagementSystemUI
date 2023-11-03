@@ -12,7 +12,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   // to environment.ts
-  private baseUrl: string = "https://localhost:7199/";
+  private baseUrl: string = "https://localhost:44339/";
 
   getUsers(httpParams: HttpParams, pageNumber: number, pageSize: number){
     return this.http.get(`${this.baseUrl}getUsers/pageNumber/${pageNumber}/pageSize/${pageSize}`, { observe: 'response', params: httpParams });

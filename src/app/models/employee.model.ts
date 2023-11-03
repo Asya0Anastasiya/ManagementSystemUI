@@ -5,7 +5,7 @@ export interface Employee {
     email: string;
     department: string;
     position: string;
-    level: string;
+    branchOffice: string;
     unConfirmedDaysCount: number;
     phoneNumber: string;
     workDays: number;

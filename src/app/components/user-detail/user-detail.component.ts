@@ -11,6 +11,9 @@ import { merge, Observable, of as observableOf, pipe } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { catchError, map, startWith, switchMap } from 'rxjs';
 import { RowData } from 'src/app/models/rowData.model';
+import { SelectDocument } from 'src/app/models/selectDocumentOptions.model';
+import { DocumentServiceService } from '../services/document-service.service';
+import { RowWithDocs } from 'src/app/models/rowWithDocs.model';
 
 @Component({
   selector: 'app-user-detail',
@@ -26,7 +29,7 @@ export class UserDetailComponent implements OnInit {
     email: '',
     department: '',
     position: '',
-    level: '',
+    branchOffice: '',
     unConfirmedDaysCount: 0,
     phoneNumber: '',
     workDays: 0,
@@ -37,6 +40,7 @@ export class UserDetailComponent implements OnInit {
   };
   
   rows: RowData[] = [];
+  rows1: RowWithDocs[] = [];
   totalData!: number;
   @ViewChild('paginator') paginator!: MatPaginator;
   month: string = '';
@@ -50,19 +54,20 @@ export class UserDetailComponent implements OnInit {
     accountingType: ''
   }
 
-  row: RowData = {
-    date: '',
-    hours: 0,
-    type: '',
-    status: '',
-    color: '',
-    id: ''
-  }
+  // row: RowData = {
+  //   date: '',
+  //   hours: 0,
+  //   type: '',
+  //   status: '',
+  //   color: '',
+  //   id: ''
+  // }
 
+  //docs: SelectDocument[] = [];
   public days: DaysAccounting[] = [];
 
   public url: string = '';
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private daysService: DaysService, private sanitizer: DomSanitizer){}
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private daysService: DaysService, private sanitizer: DomSanitizer, private docService: DocumentServiceService){}
 
   ngOnInit(): void {
     this.month = this.getCurrentMonth();
@@ -73,6 +78,7 @@ export class UserDetailComponent implements OnInit {
           this.initiateDayFilteringParams(id, '');
           this.api.getUser(id).subscribe({
             next: (response) => {
+              debugger
               this.userDetails.id = response.id;
               this.userDetails.firstName = response.firstName;
               this.userDetails.lastName = response.lastName;
@@ -87,19 +93,6 @@ export class UserDetailComponent implements OnInit {
               this.userDetails.paidDays = res.paidDaysCount;
             }
           });
-          /*let httpParams = new HttpParams();
-          const date = new Date();
-          httpParams = httpParams.set('userId', this.daysFilter.userId);
-          httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1)}`);
-          httpParams = httpParams.set('fromDate', `${this.daysFilter.fromDate.getFullYear()}-${this.daysFilter.fromDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1)}`);
-          httpParams = httpParams.set('accountingType', this.daysFilter.accountingType);
-          this.daysService.getUsersDays(httpParams, 1, 7).subscribe( (days: any) =>{
-
-              if (days != null) {
-                this.days = days.body;
-              }
-            
-          });*/
           this.initiateUserImage(id);
         }
       }
@@ -136,6 +129,7 @@ export class UserDetailComponent implements OnInit {
         this.days = empData;
         this.totalData = this.now.getDate();
         this.rows = [];
+        this.rows1 = [];
         this.initiateRows(this.paginator.pageSize);
         this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize);
         this.checkDates(this.paginator.pageSize);
@@ -143,27 +137,48 @@ export class UserDetailComponent implements OnInit {
     })
   }
 
+  downloadDocument(name: string) {
+    this.docService.downloadUserDocument(name, this.userDetails.id).subscribe(response => {
+      const url = window.URL.createObjectURL(new Blob([response]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf');
+      document.body.appendChild(link);
+      link.click();
+    })
+  }
+
   checkDates(count: number) {
     for (let i = 0; i < count; i++){
-      var rowDay = new Date(this.rows[i].date);
+      var rowDay = new Date(this.rows1[i].date);
       for (let j = 0; j < this.days.length; j++){
         let asd = new Date(this.days[j].date);
         if (rowDay.getDate() === asd.getDate()){
-          this.rows[i].hours = this.days[j].hours;
-          this.rows[i].id = this.days[j].id;
-          this.rows[i].status = (this.days[j].isConfirmed == true) ? "Confirmed" : "Not confirmed";
-          this.rows[i].color = (this.days[j].isConfirmed == true) ? "#1a773c" : "#da4057";
+          let params = new HttpParams();
+          params = params.set('date', `${rowDay.getFullYear()}-${rowDay.getMonth() + 1}-${rowDay.getDate()}`);
+          this.daysService.getUserDocumentsNames(this.userDetails.id, params).subscribe({
+            next: res => {
+              this.rows1[i].docs = res;
+            }
+          });
+          this.rows1[i].hours = this.days[j].hours;
+          this.rows1[i].id = this.days[j].id;
+          this.rows1[i].status = (this.days[j].isConfirmed == true) ? "Confirmed" : "Not confirmed";
+          this.rows1[i].color = (this.days[j].isConfirmed == true) ? "#1a773c" : "#da4057";
           if (this.days[j].accountingType === 1) {
-            this.rows[i].type = 'Work';
+            this.rows1[i].type = 'Work';
           }
           else if (this.days[j].accountingType === 2) {
-            this.rows[i].type = 'Sick day';
+            this.rows1[i].type = 'Vocation';
+          }
+          else if (this.days[j].accountingType === 3) {
+            this.rows1[i].type = 'Sick day';
           }
           break;
         }
         else {
-          this.rows[i].status = "No info";
-          this.rows[i].color = "#cbc327";
+          this.rows1[i].status = "No info";
+          this.rows1[i].color = "#cbc327";
         }
       }
       continue;
@@ -173,24 +188,25 @@ export class UserDetailComponent implements OnInit {
   initiateRowsData(start: number, end: number){
     for (let i = 0; i < end; i++){
       
-      this.rows[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
-      this.rows[i].hours = 8;
-      this.rows[i].type = '';
-      this.rows[i].status = 'No info';
+      this.rows1[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
+      this.rows1[i].hours = 8;
+      this.rows1[i].type = '';
+      this.rows1[i].status = 'No info';
     }
   }
 
   initiateRows(count:number) {
     for (let i = 1; i <= count; i++){
-      const row: RowData = {
+      const row: RowWithDocs = {
         date: '',
         hours: 0,
         type: '',
         status: '',
         color: '',
-        id: ''
+        id: '',
+        docs: []
       }
-      this.rows.push(row);
+      this.rows1.push(row);
     }
   }
 
@@ -226,6 +242,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   initiateUserImage(id: string){
+    this.url = "../../../assets/img/catNews.jpg";
     this.api.getUserImage(id).subscribe(response => {
       const imageUrl = URL.createObjectURL(response);
       this.url = imageUrl;
@@ -274,6 +291,7 @@ export class UserDetailComponent implements OnInit {
       next: (res) => {
         console.log(res);
       }
-    })
+    });
+    window.location.reload();
   }
 }

@@ -28,6 +28,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { UserDocumentComponent } from './components/user-document/user-document.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     UserProfileComponent,
     EditProfileComponent,
     UserInfoComponent,
+    UserDocumentComponent,
   ],
   imports: [
     BrowserModule,
