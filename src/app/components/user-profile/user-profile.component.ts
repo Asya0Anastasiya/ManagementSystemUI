@@ -156,10 +156,12 @@ export class UserProfileComponent implements OnInit {
       next: res => {
         console.log("ok");
       }
-    })
+    });
+    window.location.reload();
   }
 
   onSubmit() {
+    debugger
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
         console.log(res);
@@ -170,16 +172,20 @@ export class UserProfileComponent implements OnInit {
     window.location.reload();
   }
 
-  selectionChange(month: number) {
+  selectionChange(event: any) {
     debugger
     //////////// paginator
-    this.now.setMonth(month - 1);
-    this.defineIndex();
-    this.initiateDayFilteringParams(this.id, '');
-    this.ngAfterViewInit();
+    if (event.isUserInput) {
+      this.now.setMonth(event.source.value - 1);
+      this.defineIndex();
+      this.initiateDayFilteringParams(this.id, '');
+      this.ngAfterViewInit();
+    }
+    
   }
 
   onCheckboxChange(e: any, i: number) {
+    debugger
       const day: DaysAccounting = {
         hours: this.rows[i].hours,
         date: new Date(this.rows[i].date),
@@ -396,8 +402,11 @@ export class UserProfileComponent implements OnInit {
     .subscribe((empData: any) => {
       if (empData != null) {
         this.days = empData;
-        //!!!!!!!! change total data
-        this.totalData = this.now.getDate();
+        const currentMonth = new Date().getMonth();
+        if (this.now.getMonth() == currentMonth) {
+          this.totalData = this.now.getDate();
+        }
+        
         this.rows = [];
         this.initiateRows(this.paginator.pageSize);
         this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize);

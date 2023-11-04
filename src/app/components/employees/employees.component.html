@@ -3,7 +3,7 @@
 <body class="pb-3">
 <section class="vh-100">
   <div class="container pt-5">
-    <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team <button *ngIf="role === 'Admin'" (click)="createEmployee()" style="margin-left:68%; font-size: 20px">Add an employee</button></h2>
+    <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team <button  mat-raised-button *ngIf="role === 'Admin'" (click)="createEmployee()" style="margin-left:65%; font-size: 20px">Add an employee</button></h2>
     <mat-expansion-panel
                        style="border-collapse: collapse; border-radius: 1em; overflow: hidden;">
     <mat-expansion-panel-header>
@@ -40,7 +40,7 @@
         
       </div>
       <button (click)="onSearch()" mat-raised-button class="mt-4" style="background-color: #2c584a; color: white; width: 28%;">Search</button>
-      <button (click)="clear()" mat-raised-button class="mt-4 ms-4" style="background-color: #2c584a; color: white; width: 28%;">Clear</button>
+      <button (click)="clear()" mat-raised-button class="mt-4 ms-4" style="background-color: white; color: #2c584a; width: 28%;">Clear</button>
     </form>
   </mat-expansion-panel> 
 

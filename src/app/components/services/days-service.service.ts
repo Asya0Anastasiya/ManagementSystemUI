@@ -30,6 +30,7 @@ export class DaysService {
   }
 
   postDays(dayObjs: DaysAccounting[]) : Observable<DaysAccounting[]> {
+    debugger
     return this.http.post<DaysAccounting[]>(`${this.baseUrl}addDays`, dayObjs);
   }
 
@@ -42,6 +43,6 @@ export class DaysService {
   }
 
   getUserDocumentsNames(userId: string, params: HttpParams) : Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}getUsersTimeTrackingDocumentsNames/${userId}`, {params: params});
+    return this.http.get<string[]>(`${this.baseUrl}getAttachedUsersTimeTrackingDocumentsNames/${userId}`, {params: params});
   }
 }

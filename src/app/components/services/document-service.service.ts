@@ -25,7 +25,7 @@ export class DocumentServiceService {
   }
 
   getUserDocumentsNames(userId: string) : Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}getUserDocumentsNames/${userId}`);
+    return this.http.get<string[]>(`${this.baseUrl}getAllUsersTimeTrackingDocs/${userId}`);
   }
 
   attachDocument(userId: string, date: Date, name: string) {

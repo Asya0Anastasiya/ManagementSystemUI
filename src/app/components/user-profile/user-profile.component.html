@@ -64,7 +64,7 @@
           <mat-form-field class="mb-0">
             <mat-label>Select month</mat-label>
             <mat-select>
-              <mat-option (onSelectionChange)="selectionChange(month.value)" *ngFor="let month of months"
+              <mat-option (onSelectionChange)="selectionChange($event)" *ngFor="let month of months"
                 [value]="month.value">
                 {{month.viewValue}}
               </mat-option>
