@@ -46,7 +46,7 @@ loginForm!: FormGroup;
           const tokenPayload = this.auth.decodeToken();
           this.userStore.setEmailForStore(tokenPayload.email);
           this.userStore.setRoleForStore(tokenPayload.role);
-          this.router.navigate(['dashboard'])
+          this.router.navigate(['profile', tokenPayload.nameid]);
         }),
         error: (err => {
           alert(err?.error);

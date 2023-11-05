@@ -57,6 +57,7 @@ export class UserDocumentComponent implements OnInit {
   }
 
   onSubmitForm() {
+    debugger
     let formData = new FormData();
     formData.append('file', this.uploadForm.get('uploadFile')?.value);
     formData.append('type', this.uploadForm.get('type')?.value);
@@ -65,7 +66,8 @@ export class UserDocumentComponent implements OnInit {
         next: (res) => {
           console.log("ok");
         }
-      })
+      });
+    window.location.reload();
   }
 
   getUserDocuments() {

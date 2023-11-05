@@ -27,13 +27,14 @@ export class SignupComponent implements OnInit {
       password: ['', Validators.required],
       department: ['', Validators.required],
       position: ['', Validators.required],
-      level: ['', Validators.required],
-      phone: ['', Validators.required]
+      phoneNumber: ['', Validators.required]
     })
     }
 
     onSignUp() {
+      debugger
       if(this.signUpForm.valid) { 
+        debugger
         this.auth.signUp(this.signUpForm.value)
         .subscribe({
           next: (res => {

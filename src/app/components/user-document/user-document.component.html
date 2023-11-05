@@ -4,7 +4,7 @@
     <table class="table table-hover align-middle mb-0 mt-3" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
         <thead>
             <tr>
-                <th>Title</th>
+                <th class="ps-5">Title</th>
                 <th>Upload data</th>
                 <th>Size</th>
                 <th>Content type</th>
@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let document of documents">
-                <th>{{document.name}}</th>
+                <th class="ps-5">{{document.name}}</th>
                 <th>{{document.uploadData}}</th>
                 <th>{{document.size}}</th>
                 <th>{{document.contentType}}</th>
@@ -31,15 +31,16 @@
 
     <div class="d-flex justify-content-evenly">
         <form [formGroup]="uploadForm" class="row row-cols-lg-auto g-3 align-items-center mt-4" style="margin-right: 0;">
+            <span class="fs-2" style="color: aliceblue;">Upload document: </span>
             <div class="col-12">
                 <div class="input-group">
                     <input formControlName="uploadFile" class="form-control form-control-lg" id="formFig" type="file" (change)="onDocumentSelected($event)" style="width: 17%;" />
                 </div>
             </div>
-        
+            
             <div class="col-12 d-flex align-items-center" style="height: 100%;">
-                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                <select formControlName="type" class="select"  style="height: 65%;">
+                <span class="fs-3" style="color: aliceblue;">Choose type: </span>
+                <select formControlName="type" class="form-select" style="height: 65%;">
                     <option value="1">Time tracking</option>
                     <option value="2">Other</option>
                 </select>

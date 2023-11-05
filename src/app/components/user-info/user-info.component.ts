@@ -3,6 +3,8 @@ import { Employee } from 'src/app/models/employee.model';
 import { UserStoreService } from '../services/user-store.service';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-info',
@@ -11,10 +13,9 @@ import { ApiService } from '../services/api.service';
 })
 export class UserInfoComponent implements OnInit {
 
-  constructor(private userStore: UserStoreService, private auth: AuthService, private api: ApiService) {}
+  constructor(private userStore: UserStoreService, private fb: FormBuilder, private auth: AuthService, private api: ApiService, private route: ActivatedRoute) {}
 
   public url: string = '';
-  public id: string = '';
 
   userDetails: Employee = {
     id: '',
@@ -33,26 +34,53 @@ export class UserInfoComponent implements OnInit {
     url: ''
   };
 
+  personalForm!: FormGroup;
+  positionForm!: FormGroup;
+
   ngOnInit(): void {
-    this.userStore.getIdFromStore()
-    .subscribe(val => {
-      const idFromToken = this.auth.getIdFromToken();
-      this.id = val || idFromToken;
-    });
+    this.route.paramMap.subscribe({
+      next: (params) => {
+        const id = params.get('id');
+        if (id) {
+          this.api.getUser(id).subscribe({
+            next: (response) => {
+              this.userDetails.id = response.id;
+              this.userDetails.firstName = response.firstName;
+              this.userDetails.lastName = response.lastName;
+              this.userDetails.email = response.email;
+              this.userDetails.department = response.department;
+              this.userDetails.position = response.position;
+              this.userDetails.branchOffice = response.branchOffice;
 
-    this.api.getUser(this.id).subscribe({
-      next: (response) => {
-        this.userDetails.id = response.id;
-        this.userDetails.firstName = response.firstName;
-        this.userDetails.lastName = response.lastName;
-        this.userDetails.email = response.email;
-        this.userDetails.department = response.department;
-        this.userDetails.position = response.position;
-        this.userDetails.branchOffice = response.branchOffice;
+              this.personalForm.get('firstname')?.setValue(this.userDetails.firstName);
+              this.personalForm.get('lastname')?.setValue(this.userDetails.lastName);
+              this.personalForm.get('email')?.setValue(this.userDetails.email);
+              this.personalForm.get('phoneNumber')?.setValue(this.userDetails.phoneNumber);
+
+              this.positionForm.get('position')?.setValue(this.userDetails.position);
+              this.positionForm.get('department')?.setValue(this.userDetails.department);
+              this.positionForm.get('branchOffice')?.setValue(this.userDetails.branchOffice);
+            }
+          });
+      
+        this.initiateUserImage(id);
+
+        this.personalForm = this.fb.group({
+          firstname: [''],
+          lastname: [''],
+          email: [''],
+          phoneNumber: ['']
+        });
+
+        this.positionForm = this.fb.group({
+          position: [''],
+          department: [''],
+          branchOffice: [''],
+          Address: ['']
+        });
+        }
       }
-    });
-
-    this.initiateUserImage(this.id);
+    })
   }
 
   initiateUserImage(id: string){

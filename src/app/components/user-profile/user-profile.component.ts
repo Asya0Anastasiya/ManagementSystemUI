@@ -161,20 +161,20 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
         console.log(res);
         //this.router.navigate([`profile/${this.id}`]);
-      }
+      },
+      error: (err => {
+        alert(err?.error);
+      })
     });
     this.daysArray = [];
     window.location.reload();
   }
 
   selectionChange(event: any) {
-    debugger
-    //////////// paginator
     if (event.isUserInput) {
       this.now.setMonth(event.source.value - 1);
       this.defineIndex();
@@ -185,7 +185,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   onCheckboxChange(e: any, i: number) {
-    debugger
       const day: DaysAccounting = {
         hours: this.rows[i].hours,
         date: new Date(this.rows[i].date),
@@ -194,7 +193,7 @@ export class UserProfileComponent implements OnInit {
         id: '',
         isConfirmed: false
       }
-
+      day.date.setHours(5);
     this.daysArray.push(day);
   }
 
