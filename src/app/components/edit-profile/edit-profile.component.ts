@@ -62,14 +62,12 @@ export class EditProfileComponent implements OnInit {
       this.api.updateUser(this.editForm.value)
       .subscribe({
         next: (res => {
-          //this.router.navigate(['dashboard']);
         }),
         error: (err => {
           alert(err?.error);
         })
       });
       window.location.reload();
-      //console.log(this.editForm.value);
     } else{
       ValidateForm.validateAllFormFields(this.editForm);
     }
@@ -105,17 +103,14 @@ export class EditProfileComponent implements OnInit {
   
   onImageSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    debugger
     this.onImageUpload();
   } 
 
   onImageUpload() {
-    debugger
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     this.api.setUserImage(this.id, formData).subscribe({
       next: (res) => {
-        debugger
         console.log(res);
       }
     });

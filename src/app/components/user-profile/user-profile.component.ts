@@ -150,8 +150,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   attachDocument(name: string, dateStr: string) {
-    debugger
-    const date = new Date(dateStr);
+    let date = new Date(dateStr);
+    date.setHours(5);
     this.docService.attachDocument(this.id, date, name).subscribe({
       next: res => {
         console.log("ok");
@@ -164,7 +164,6 @@ export class UserProfileComponent implements OnInit {
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
         console.log(res);
-        //this.router.navigate([`profile/${this.id}`]);
       },
       error: (err => {
         alert(err?.error);
@@ -300,7 +299,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   postVocations() {
-    debugger
     let start = new Date(this.vocationsForm.get('start')?.value);
     const end = new Date(this.vocationsForm.get('end')?.value);
     while (start <= end ) {

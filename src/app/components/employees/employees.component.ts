@@ -95,8 +95,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   clear() {
-    //window.location.reload();
-    //this.searchForm.reset();
     let httpParams = new HttpParams();
     this.ngAfterViewInit(httpParams);
     this.searchForm.reset();

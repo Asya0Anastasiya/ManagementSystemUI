@@ -11,7 +11,6 @@ import { merge, Observable, of as observableOf, pipe } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { catchError, map, startWith, switchMap } from 'rxjs';
 import { RowData } from 'src/app/models/rowData.model';
-import { SelectDocument } from 'src/app/models/selectDocumentOptions.model';
 import { DocumentServiceService } from '../services/document-service.service';
 import { RowWithDocs } from 'src/app/models/rowWithDocs.model';
 
@@ -54,16 +53,6 @@ export class UserDetailComponent implements OnInit {
     accountingType: ''
   }
 
-  // row: RowData = {
-  //   date: '',
-  //   hours: 0,
-  //   type: '',
-  //   status: '',
-  //   color: '',
-  //   id: ''
-  // }
-
-  //docs: SelectDocument[] = [];
   public days: DaysAccounting[] = [];
 
   public url: string = '';
@@ -78,7 +67,6 @@ export class UserDetailComponent implements OnInit {
           this.initiateDayFilteringParams(id, '');
           this.api.getUser(id).subscribe({
             next: (response) => {
-              debugger
               this.userDetails.id = response.id;
               this.userDetails.firstName = response.firstName;
               this.userDetails.lastName = response.lastName;

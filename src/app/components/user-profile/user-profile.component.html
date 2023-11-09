@@ -108,7 +108,8 @@
                   <mat-form-field>
                     <mat-label>Select document</mat-label>
                     <mat-select>
-                      <mat-option (onSelectionChange)="attachDocument(doc.value, row.date)" *ngFor="let doc of docs" [value]="doc.value">
+                      <mat-option (onSelectionChange)="attachDocument(doc.value, row.date)" *ngFor="let doc of docs"
+                        [value]="doc.value">
                         {{doc.viewValue}}
                       </mat-option>
                     </mat-select>

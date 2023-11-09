@@ -1,59 +1,5 @@
-<!--<form>
-  <div class="form-group row">
-    <label for="firstName" class="col-sm-2 col-form-label">FirstName</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.firstName}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="lastName" class="col-sm-2 col-form-label">LastName</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.lastName}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="email" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.email}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="dateOfBirth" class="col-sm-2 col-form-label">BirthDay</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control-plaintext" id="staticEmail" value="{{userDetails.dateOfBirth}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <a routerLink="usersDays" for="workDays" class="col-sm-2 col-form-label">Working days</a>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.workDays}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <a for="sickDays" class="col-sm-2 col-form-label">Sick Days</a>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.sickDays}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <a for="holidays" class="col-sm-2 col-form-label">Holidays</a>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.holidays}}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="paidDays" class="col-sm-2 col-form-label">Paid days</label>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{userDetails.paidDays}}">
-    </div>
-  </div>
-</form>
-
-<button (click)="deleteUser(userDetails.id)"><span class="fa fa-solid fa-trash"></span></button>
-<button (click)="updateUser()"><span class="fa fa-solid fa-trash"></span></button> -->
-
 <user-navbar></user-navbar>
-<section  class="h-100 pb-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+<section class="h-100 pb-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-8">
@@ -61,8 +7,7 @@
           <div class="card-body p-4">
             <div class="d-flex text-black">
               <div class="flex-shrink-0">
-                <img src="{{url}}"
-                  alt="Generic placeholder image" class="img-fluid"
+                <img src="{{url}}" alt="Generic placeholder image" class="img-fluid"
                   style="width: 180px; border-radius: 10px;" />
               </div>
               <div class="flex-grow-1 ms-3">
@@ -70,8 +15,7 @@
                 <p class="mb-2 pb-1" style="color: #2b2a2a;">
                   {{userDetails.email}}
                 </p>
-                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                  style="background-color: #efefef;">
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
                   <div>
                     <p class="small text-muted mb-1">
                       Working days
@@ -108,7 +52,8 @@
   </div>
 
   <div class="container mt-5">
-    <table class="table mb-0" style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+    <table class="table mb-0"
+      style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
       <thead>
         <tr style="text-align: center;">
           <th scope="col">Date</th>
@@ -125,7 +70,7 @@
           <th scope="row">{{row.hours}}</th>
           <td>{{row.type}}</td>
           <td>
-            <div  class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
+            <div class="rounded-pill me-5 text-center h-50" style="color: white" [style.background-color]="row.color">
               {{row.status}}
             </div>
           </td>
@@ -140,24 +85,16 @@
             </mat-form-field>
           </td>
           <td>
-            <button mat-raised-button style="background-color: #2c584a; color: white;" [disabled]="row.status==='No info' || row.status==='Confirmed'"  (click)="approveDay(row.id)">Confirm</button>
-            <button style="border-color: red;" class="ms-2" mat-stroked-button color="warn" [disabled]="row.status==='No info'" (click)="removeDay(row.id)">Delete</button>
+            <button mat-raised-button style="background-color: #2c584a; color: white;"
+              [disabled]="row.status==='No info' || row.status==='Confirmed'"
+              (click)="approveDay(row.id)">Confirm</button>
+            <button style="border-color: red;" class="ms-2" mat-stroked-button color="warn"
+              [disabled]="row.status==='No info'" (click)="removeDay(row.id)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <mat-paginator
-  #paginator
-  [length]="totalData"
-  [pageSizeOptions]="[5, 10, 15]"
-  showFirstLastButtons
-  style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+    <mat-paginator #paginator [length]="totalData" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons
+      style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
   </div>
 </section>
-
-
-
-
-
-
-            

@@ -25,22 +25,19 @@ export class SignupComponent implements OnInit {
       lastname: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      department: ['', Validators.required],
-      position: ['', Validators.required],
+      positionId: ['', Validators.required],
       phoneNumber: ['', Validators.required]
     })
     }
 
     onSignUp() {
-      debugger
       if(this.signUpForm.valid) { 
-        debugger
         this.auth.signUp(this.signUpForm.value)
         .subscribe({
           next: (res => {
-            alert(res?.message);
+            alert("User was successfully added");
             this.signUpForm.reset();
-            this.router.navigate(['login']);
+            //this.router.navigate(['login']);
           }),
           error: (err => {
             alert(err?.error.message);
@@ -59,6 +56,6 @@ export class SignupComponent implements OnInit {
   }
 
   resetForm(){
-
+    this.signUpForm.reset();
   }
 }

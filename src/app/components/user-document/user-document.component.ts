@@ -37,27 +37,15 @@ export class UserDocumentComponent implements OnInit {
 
   onDocumentSelected(event: any) {
     this.selectedDoc = event.target.files[0];
-    // debugger
-    // this.uploadDocument();
     this.uploadForm.get('uploadFile')?.setValue(this.selectedDoc);
     console.log("jjjf");
   }
 
-  //Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string.
-
   uploadDocument() {
-    // debugger
-    // const formData = new FormData();
-    // formData.append('file', this.selectedDoc);
-    // this.docService.uploadUserDocument(this.id, formData).subscribe({
-    //   next: (res) => {
-    //     console.log("ok");
-    //   }
-    // })
+    
   }
 
   onSubmitForm() {
-    debugger
     let formData = new FormData();
     formData.append('file', this.uploadForm.get('uploadFile')?.value);
     formData.append('type', this.uploadForm.get('type')?.value);
