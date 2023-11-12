@@ -11,7 +11,7 @@ export class DaysService {
 
   constructor(private http: HttpClient) {}
 
-  private baseUrl: string = "http://localhost:5000/";
+  private baseUrl: string = "https://localhost:44339/";
 
   getUsersDaysInfo(userId: string, month: number, year: number) : Observable<UsersDaysInfo> {
     return this.http.get<UsersDaysInfo>(`${this.baseUrl}getUsersDaysInfo/${userId}/month/${month}/year/${year}`);
@@ -30,6 +30,7 @@ export class DaysService {
   }
 
   postDays(dayObjs: DaysAccounting[]) : Observable<DaysAccounting[]> {
+    debugger
     return this.http.post<DaysAccounting[]>(`${this.baseUrl}addDays`, dayObjs);
   }
 

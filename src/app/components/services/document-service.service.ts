@@ -10,7 +10,7 @@ export class DocumentServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private baseUrl: string = "http://localhost:5000/";
+  private baseUrl: string = "https://localhost:44339/";
 
   downloadUserDocument(fileName: string, userId: string) : Observable<any> {
     return this.http.get(`${this.baseUrl}downloadUserDocument/${fileName}/${userId}`, { responseType: 'blob'});

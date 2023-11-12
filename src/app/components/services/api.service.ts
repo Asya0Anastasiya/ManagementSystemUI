@@ -12,14 +12,13 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   // to environment.ts
-  private baseUrl: string = "http://localhost:5000/";
+  private baseUrl: string = "https://localhost:44339/";
 
   getUsers(httpParams: HttpParams, pageNumber: number, pageSize: number){
     return this.http.get(`${this.baseUrl}getUsers/pageNumber/${pageNumber}/pageSize/${pageSize}`, { observe: 'response', params: httpParams });
   }
 
   getUser(id: string) : Observable<Employee>{
-    debugger
     return this.http.get<Employee>(`${this.baseUrl}getUser/${id}`);
   }
 
@@ -32,6 +31,7 @@ export class ApiService {
   }
 
   setUserImage(userId: string, file: FormData) : Observable<any>{
+    debugger
     return this.http.post<any>(`${this.baseUrl}setUserImage/${userId}`, file);
   }
 

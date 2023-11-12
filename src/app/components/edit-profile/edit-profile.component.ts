@@ -114,6 +114,6 @@ export class EditProfileComponent implements OnInit {
         console.log(res);
       }
     });
-    window.location.reload();
+    //window.location.reload();
   }
 }
