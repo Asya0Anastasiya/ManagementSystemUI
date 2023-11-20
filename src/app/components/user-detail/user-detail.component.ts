@@ -14,6 +14,7 @@ import { RowData } from 'src/app/models/rowData.model';
 import { DocumentServiceService } from '../services/document-service.service';
 import { RowWithDocs } from 'src/app/models/rowWithDocs.model';
 
+
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -73,7 +74,7 @@ export class UserDetailComponent implements OnInit {
               this.userDetails.email = response.email;
             }
           });
-          this.daysService.getUsersDaysInfo(id, this.now.getMonth(), this.now.getFullYear()).subscribe({
+          this.daysService.getUsersDaysInfo(id, this.now.getMonth() + 1, this.now.getFullYear()).subscribe({
             next: (res) => {
               this.userDetails.workDays = res.workDaysCount;
               this.userDetails.sickDays = res.sickDaysCount;
@@ -92,6 +93,19 @@ export class UserDetailComponent implements OnInit {
     .pipe(
       startWith({}),
       switchMap(() => {
+        this.route.paramMap.subscribe({
+          next: (params) =>{
+            const id = params.get('id');
+            if (id){
+              this.initiateDayFilteringParams(id, '');
+              this.api.getUser(id).subscribe({
+                next: (response) => {
+                  this.userDetails.id = response.id;
+                }
+              });
+            }
+          }
+        });
         let httpParams = new HttpParams();
         httpParams = httpParams.set('userId', this.daysFilter.userId);
         httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1)}`);
@@ -126,11 +140,14 @@ export class UserDetailComponent implements OnInit {
   }
 
   downloadDocument(name: string) {
+    debugger
+    let ext = name.split('.');
     this.docService.downloadUserDocument(name, this.userDetails.id).subscribe(response => {
+      debugger
       const url = window.URL.createObjectURL(new Blob([response]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'file.pdf');
+      link.setAttribute('download', ext[0] + '.' + ext[1]);
       document.body.appendChild(link);
       link.click();
     })
@@ -144,6 +161,7 @@ export class UserDetailComponent implements OnInit {
         if (rowDay.getDate() === asd.getDate()){
           let params = new HttpParams();
           params = params.set('date', `${rowDay.getFullYear()}-${rowDay.getMonth() + 1}-${rowDay.getDate()}`);
+          // attached docs
           this.daysService.getUserDocumentsNames(this.userDetails.id, params).subscribe({
             next: res => {
               this.rows1[i].docs = res;
@@ -156,7 +174,7 @@ export class UserDetailComponent implements OnInit {
           if (this.days[j].accountingType === 1) {
             this.rows1[i].type = 'Work';
           }
-          else if (this.days[j].accountingType === 2) {
+          else if (this.days[j].accountingType === 4) {
             this.rows1[i].type = 'Vocation';
           }
           else if (this.days[j].accountingType === 3) {
@@ -179,6 +197,7 @@ export class UserDetailComponent implements OnInit {
       this.rows1[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
       this.rows1[i].hours = 8;
       this.rows1[i].type = '';
+      this.rows1[i].color = "#cbc327";
       this.rows1[i].status = 'No info';
     }
   }

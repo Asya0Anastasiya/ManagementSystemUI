@@ -116,10 +116,12 @@ export class UserProfileComponent implements OnInit {
     {value: 8, viewValue: 'Aughust'},
     {value: 9, viewValue: 'September'},
     {value: 10, viewValue: 'October'},
-    {value: 11, viewValue: 'November'}
+    {value: 11, viewValue: 'November'},
+    {value: 12, viewValue: 'December'}
   ];
 
   ngOnInit(): void {
+    
     this.month = this.getCurrentMonth();
     this.userStore.getIdFromStore()
     .subscribe(val => {
@@ -133,6 +135,15 @@ export class UserProfileComponent implements OnInit {
         this.userDetails.firstName = response.firstName;
         this.userDetails.lastName = response.lastName;
         this.userDetails.email = response.email;
+      }
+    });
+
+    this.daysService.getUsersDaysInfo(this.id, this.now.getMonth() + 1, this.now.getFullYear()).subscribe({
+      next: (res) => {
+        this.userDetails.workDays = res.workDaysCount;
+        this.userDetails.sickDays = res.sickDaysCount;
+        this.userDetails.holidays = res.holidaysCount;
+        this.userDetails.paidDays = res.paidDaysCount;
       }
     });
 
@@ -150,27 +161,33 @@ export class UserProfileComponent implements OnInit {
   }
 
   attachDocument(name: string, dateStr: string) {
+    debugger
     let date = new Date(dateStr);
     date.setHours(5);
     this.docService.attachDocument(this.id, date, name).subscribe({
       next: res => {
         console.log("ok");
+        window.location.reload();
       }
     });
-    window.location.reload();
   }
 
   onSubmit() {
-    this.daysService.postDays(this.daysArray).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err => {
-        alert(err?.error);
-      })
-    });
-    this.daysArray = [];
-    window.location.reload();
+    if (this.daysArray.length != 0) {
+      this.daysService.postDays(this.daysArray).subscribe({
+        next: (res) => {
+          console.log(res);
+          window.location.reload();
+        },
+        error: (err => {
+          alert(err?.error);
+        })
+      });
+      this.daysArray = [];
+    }
+    else {
+      alert("You should choose at least 1 day to submit");
+    }
   }
 
   selectionChange(event: any) {
@@ -179,21 +196,27 @@ export class UserProfileComponent implements OnInit {
       this.defineIndex();
       this.initiateDayFilteringParams(this.id, '');
       this.ngAfterViewInit();
-    }
-    
+    }    
   }
 
   onCheckboxChange(e: any, i: number) {
-      const day: DaysAccounting = {
-        hours: this.rows[i].hours,
-        date: new Date(this.rows[i].date),
-        accountingType: 1,
-        userId: this.id,
-        id: '',
-        isConfirmed: false
-      }
-      day.date.setHours(5);
-    this.daysArray.push(day);
+    debugger
+    const day: DaysAccounting = {
+      hours: this.rows[i].hours,
+      date: new Date(this.rows[i].date),
+      accountingType: 1,
+      userId: this.id,
+      id: '',
+      isConfirmed: false
+    }
+    day.date.setHours(5);
+    if (e.target.checked == true) {
+      this.daysArray.push(day);
+    }
+    else {
+      let index = this.daysArray.toString();
+      //this.daysArray.splice(index, 1);
+    }
   }
 
   checkDates(count: number) {
@@ -205,10 +228,11 @@ export class UserProfileComponent implements OnInit {
           this.rows[i].hours = this.days[j].hours;
           this.rows[i].status = (this.days[j].isConfirmed == true) ? "Confirmed" : "Not confirmed";
           this.rows[i].color = (this.days[j].isConfirmed == true) ? "#1a773c" : "#da4057";
+          
           if (this.days[j].accountingType === 1) {
             this.rows[i].type = 'Work';
           }
-          else if (this.days[j].accountingType === 2) {
+          else if (this.days[j].accountingType === 4) {
             this.rows[i].type = 'Vocation';
           }
           else if (this.days[j].accountingType === 3) {
@@ -243,6 +267,7 @@ export class UserProfileComponent implements OnInit {
       this.rows[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
       this.rows[i].hours = 8;
       this.rows[i].type = '';
+      this.rows[i].color = "#cbc327";
       this.rows[i].status = 'No info';
     }
   }
@@ -273,7 +298,9 @@ export class UserProfileComponent implements OnInit {
 
   postSickDays() {
     let start = new Date(this.sickDayForm.get('start')?.value);
+    start.setHours(5);
     const end = new Date(this.sickDayForm.get('end')?.value);
+    end.setHours(5);
     while (start <= end ) {
       const dateSt = new Date(start);
       const day: DaysAccounting = {
@@ -289,18 +316,22 @@ export class UserProfileComponent implements OnInit {
     }
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
+        window.location.reload();
       },
       error:  (err => {
         alert(err?.error);
       })
     });
     this.daysArray = [];
-    window.location.reload();
+    
   }
 
   postVocations() {
+    debugger
     let start = new Date(this.vocationsForm.get('start')?.value);
+    start.setHours(5);
     const end = new Date(this.vocationsForm.get('end')?.value);
+    end.setHours(5);
     while (start <= end ) {
       const dateSt = new Date(start);
       const day: DaysAccounting = {
@@ -316,13 +347,14 @@ export class UserProfileComponent implements OnInit {
     }
     this.daysService.postDays(this.daysArray).subscribe({
       next: (res) => {
+        window.location.reload();
       },
       error:  (err => {
         alert(err?.error);
       })
     });
     this.daysArray = [];
-    window.location.reload();
+    
   }
 
 
@@ -371,6 +403,7 @@ export class UserProfileComponent implements OnInit {
     this.daysFilter.accountingType = accountingType;
   }
 
+  start: number = 0;
   ngAfterViewInit() {
     this.paginator.page
     .pipe(
@@ -378,7 +411,14 @@ export class UserProfileComponent implements OnInit {
       switchMap(() => {
         let httpParams = new HttpParams();
         httpParams = httpParams.set('userId', this.daysFilter.userId);
-        httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1)}`);
+        this.start = this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1);
+        if (this.start > 26) {
+          this.defineIndex();
+          httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.totalData}`);
+        }
+        else {
+          httpParams = httpParams.set('tillDate', `${this.daysFilter.tillDate.getFullYear()}-${this.daysFilter.tillDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1)}`);
+        }
         httpParams = httpParams.set('fromDate', `${this.daysFilter.fromDate.getFullYear()}-${this.daysFilter.fromDate.getMonth() + 1}-${this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1)}`);
         httpParams = httpParams.set('accountingType', this.daysFilter.accountingType);
         return this.daysService.getUsersDays(
@@ -405,9 +445,16 @@ export class UserProfileComponent implements OnInit {
         }
         
         this.rows = [];
-        this.initiateRows(this.paginator.pageSize);
-        this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize);
-        this.checkDates(this.paginator.pageSize);
+        if (this.start > 26) {
+          this.initiateRows(this.totalData % this.paginator.pageSize);
+          this.initiateRowsData(this.start, this.totalData % this.paginator.pageSize);
+          this.checkDates(this.totalData % this.paginator.pageSize);
+        }
+        else {
+          this.initiateRows(this.paginator.pageSize);
+          this.initiateRowsData(this.paginator.pageSize * (this.paginator.pageIndex + 1) - (this.paginator.pageSize - 1), this.paginator.pageSize);
+          this.checkDates(this.paginator.pageSize);
+        }       
       }      
     })
   }

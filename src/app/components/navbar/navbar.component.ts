@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
 
   public role: string = "";
   public id: string = "";
+  public email: string = "";
   public url: string = '';
 
   constructor(private auth: AuthService, private api: ApiService, private userStore: UserStoreService){}
@@ -31,6 +32,12 @@ export class NavbarComponent implements OnInit {
     .subscribe(val => {
       const idFromToken = this.auth.getIdFromToken();
       this.id = val || idFromToken;
+    });
+
+    this.userStore.getEmailFromStore()
+    .subscribe(val => {
+      const emailFromToken = this.auth.getEmailFromToken();
+      this.email = val || emailFromToken;
     });
 
     this.initiateUserImage(this.id);

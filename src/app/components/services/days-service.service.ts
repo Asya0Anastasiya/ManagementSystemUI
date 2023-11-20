@@ -30,7 +30,6 @@ export class DaysService {
   }
 
   postDays(dayObjs: DaysAccounting[]) : Observable<DaysAccounting[]> {
-    debugger
     return this.http.post<DaysAccounting[]>(`${this.baseUrl}addDays`, dayObjs);
   }
 

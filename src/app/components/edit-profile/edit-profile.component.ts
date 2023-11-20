@@ -58,16 +58,16 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit() {
     if(this.editForm.valid) { 
-      debugger
       this.api.updateUser(this.editForm.value)
       .subscribe({
         next: (res => {
+          window.location.reload();
         }),
         error: (err => {
           alert(err?.error);
         })
       });
-      window.location.reload();
+      
     } else{
       ValidateForm.validateAllFormFields(this.editForm);
     }
@@ -85,7 +85,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   changePassword(){
-    debugger
     let changePassModel: ChangePassword = {
       id: this.id,
       oldPassword: this.passwordForm.get('oldPassword')?.value,
@@ -93,7 +92,7 @@ export class EditProfileComponent implements OnInit {
     }
     this.api.changePassword(changePassModel).subscribe({
       next: res => {
-        
+        window.location.reload();
       }
     });
     window.location.reload();
@@ -111,9 +110,9 @@ export class EditProfileComponent implements OnInit {
     formData.append('file', this.selectedFile);
     this.api.setUserImage(this.id, formData).subscribe({
       next: (res) => {
-        console.log(res);
+        window.location.reload();
       }
     });
-    //window.location.reload();
+    
   }
 }

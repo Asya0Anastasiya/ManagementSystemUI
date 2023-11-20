@@ -6,7 +6,6 @@
         <thead>
             <tr>
                 <th class="ps-5">Title</th>
-                <th>Upload data</th>
                 <th>Size</th>
                 <th>Content type</th>
                 <th> </th>
@@ -14,9 +13,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let document of documents">
-                <th class="ps-5">{{document.name}}</th>
-                <th>{{document.uploadData}}</th>
-                <th>{{document.size}}</th>
+                <th class="ps-5"><i class="fa-solid fa-file fa-lg"></i> {{document.name}}</th>
+                <th>{{document.size}} KB</th>
                 <th>{{document.contentType}}</th>
                 <th><button mat-raised-button style="background-color: #2c584a; color: white;"
                         (click)="downloadDocument(document.name)">Download</button></th>

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { UserDocumentComponent } from './user-document.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('UserDocumentComponent', () => {
   let component: UserDocumentComponent;
@@ -8,7 +10,9 @@ describe('UserDocumentComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserDocumentComponent]
+      declarations: [UserDocumentComponent, NavbarComponent],
+      imports: [HttpClientTestingModule, FormsModule,
+        ReactiveFormsModule]
     });
     fixture = TestBed.createComponent(UserDocumentComponent);
     component = fixture.componentInstance;

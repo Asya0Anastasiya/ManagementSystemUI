@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTooltip } from '@angular/material/tooltip';
 import { EmployeesComponent } from './employees.component';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { MatExpansionPanelHeader } from '@angular/material/expansion';
+import { MatExpansionPanelTitle } from '@angular/material/expansion';
 
 describe('EmployeesComponent', () => {
   let component: EmployeesComponent;
@@ -8,7 +14,9 @@ describe('EmployeesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EmployeesComponent]
+      declarations: [EmployeesComponent, NavbarComponent, MatPaginator, MatTooltip, MatExpansionPanel, 
+        MatExpansionPanelHeader, MatExpansionPanelTitle],
+      imports: [HttpClientTestingModule]
     });
     fixture = TestBed.createComponent(EmployeesComponent);
     component = fixture.componentInstance;

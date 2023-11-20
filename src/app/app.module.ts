@@ -6,7 +6,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
@@ -29,6 +28,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import {MatExpansionModule} from '@angular/material/expansion';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { UserDocumentComponent } from './components/user-document/user-document.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -36,7 +36,6 @@ import { UserDocumentComponent } from './components/user-document/user-document.
     AppComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent,
     EmployeesComponent,
     UserDetailComponent,
     NavbarComponent,
@@ -54,6 +53,7 @@ import { UserDocumentComponent } from './components/user-document/user-document.
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatTabsModule,

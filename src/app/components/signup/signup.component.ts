@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required],
       positionId: ['', Validators.required],
       phoneNumber: ['', Validators.required]
@@ -40,11 +40,13 @@ export class SignupComponent implements OnInit {
             //this.router.navigate(['login']);
           }),
           error: (err => {
-            alert(err?.error.message);
+            debugger
+            alert(err?.error);
           })
         });
         console.log(this.signUpForm.value);
       } else{
+        debugger
         ValidateForm.validateAllFormFields(this.signUpForm);
       }
     }

@@ -38,12 +38,8 @@ export class UserDocumentComponent implements OnInit {
   onDocumentSelected(event: any) {
     this.selectedDoc = event.target.files[0];
     this.uploadForm.get('uploadFile')?.setValue(this.selectedDoc);
-    console.log("jjjf");
   }
 
-  uploadDocument() {
-    
-  }
 
   onSubmitForm() {
     let formData = new FormData();
@@ -53,9 +49,10 @@ export class UserDocumentComponent implements OnInit {
     this.docService.uploadUserDocument(formData).subscribe({
         next: (res) => {
           console.log("ok");
+          // ?????????????
+          window.location.reload();
         }
       });
-    window.location.reload();
   }
 
   getUserDocuments() {

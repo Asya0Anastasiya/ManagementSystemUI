@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EditProfileComponent } from './edit-profile.component';
 
@@ -8,7 +11,9 @@ describe('EditProfileComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditProfileComponent]
+      declarations: [EditProfileComponent, NavbarComponent],
+      imports: [HttpClientTestingModule, FormsModule,
+        ReactiveFormsModule]
     });
     fixture = TestBed.createComponent(EditProfileComponent);
     component = fixture.componentInstance;

@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { DaysServiceService } from './days-service.service';
+import { DaysService } from './days-service.service';
 
 describe('DaysServiceService', () => {
-  let service: DaysServiceService;
+  let service: DaysService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DaysServiceService);
+    TestBed.configureTestingModule({imports: [HttpClientTestingModule]});
+    service = TestBed.inject(DaysService);
   });
 
   it('should be created', () => {

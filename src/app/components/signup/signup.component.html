@@ -44,12 +44,12 @@
 
 
                   <div class="form-outline mb-4"
-                    [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required', 'email')">
+                    [class.error]="signUpForm.controls['email'].dirty && (signUpForm.hasError('required', 'email') || (signUpForm.hasError('email', 'email')))">
                     <label class="form-label" for="form3Example8">Email</label>
                     <input formControlName="email" type="text" id="form3Example8"
                       class="form-control form-control-lg" />
-                    <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required', 'email')"
-                      class="text-danger">*Email is required</small>
+                    <small *ngIf="signUpForm.controls['email'].dirty && (signUpForm.hasError('required', 'email') || (signUpForm.hasError('email', 'email')))"
+                      class="text-danger">*Email isn't valid</small>
                   </div>
 
                   <div class="form-outline mb-4"
