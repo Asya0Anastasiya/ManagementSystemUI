@@ -200,7 +200,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onCheckboxChange(e: any, i: number) {
-    debugger
+    
     const day: DaysAccounting = {
       hours: this.rows[i].hours,
       date: new Date(this.rows[i].date),
@@ -214,8 +214,7 @@ export class UserProfileComponent implements OnInit {
       this.daysArray.push(day);
     }
     else {
-      let index = this.daysArray.toString();
-      //this.daysArray.splice(index, 1);
+      this.daysArray.pop();
     }
   }
 
