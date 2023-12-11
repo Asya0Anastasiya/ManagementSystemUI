@@ -9,17 +9,14 @@
                 src="https://images.unsplash.com/photo-1664058249156-b9908750f917?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjZ8fGRvZyUyMGNvbXB1dGVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
             </div>
-            <div class="col-md-6 col-lg-7 d-flex align-items-end">
+            <div class="col-md-6 col-sm-12 col-lg-7 d-flex align-items-end">
               <div class="card-body p-4 p-lg-5 text-black">
 
                 <form [formGroup]="loginForm">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
-                    <span class="h2 fw-bold mb-3 pb-3" style="letter-spacing: 1px; font-size: 50px;">Sign in</span>
+                    <span class="h2 fw-bold mb-3 pb-3" style="letter-spacing: 1px; font-size: 60px;">Sign in</span>
                   </div>
-
-
-
                   <div class="form-outline mb-4"
                     [class.error]="loginForm.controls['email'].dirty && (loginForm.hasError('email', 'email') || (loginForm.hasError('required', 'email')))">
                     <label class="form-label" for="form2Example17">Email address</label>
@@ -45,7 +42,6 @@
                       style="background-color: #0a1e1a; color: white; width: 100%; letter-spacing: 3px; font-size: 20px;" type="button">Login</button>
                   </div>
                 </form>
-
               </div>
             </div>
           </div>
@@ -53,4 +49,11 @@
       </div>
     </div>
   </div>
-</section>
+</section> 
+
+<!-- <section>
+  <div [ngStyle]="{'color': color}">
+    <h2>hello world</h2>
+    <input type="text" [(ngModel)]="color" placeholder="Введите цвет">
+  </div>
+</section> -->
