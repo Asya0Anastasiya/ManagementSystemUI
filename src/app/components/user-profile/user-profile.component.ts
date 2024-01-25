@@ -17,6 +17,7 @@ import { SelectMonthOptions } from "src/app/models/selectOptions.model";
 import { Router } from "@angular/router";
 import { SelectDocument } from "src/app/models/selectDocumentOptions.model";
 import { DocumentServiceService } from "../services/document-service.service";
+import { DocumentInfo } from "src/app/models/documentInfo.model";
 
 
 @Component({
@@ -150,21 +151,21 @@ export class UserProfileComponent implements OnInit {
 
   	this.initiateUserImage(this.id);
   	this.initiateDayFilteringParams(this.id, "");
-  	this.docService.getUserDocumentsNames(this.id).subscribe((res: string[]) => {
+  	this.docService.getUserDocumentsNames(this.id).subscribe((res: DocumentInfo[]) => {
   		for (let i = 0; i < res.length; i++) {
   			const doc: SelectDocument = {
-  				value: res[i],
-  				viewValue: res[i]
+  				value: res[i].id,
+  				viewValue: res[i].name
   			};
   			this.docs.push(doc);
   		}
   	});
   }
 
-  attachDocument(name: string, dateStr: string) {
+  attachDocument(documentId: string, dateStr: string) {
   	const date = new Date(dateStr);
   	date.setHours(5);
-  	this.docService.attachDocument(this.id, date, name).subscribe({
+  	this.docService.attachDocument(this.id, date, documentId).subscribe({
   		next: () => {
   			window.location.reload();
   		}

@@ -64,18 +64,12 @@ export class EmployeesComponent implements OnInit {
   			}),
   			map((empData) => {
   				if (empData == null) return [];
-  				const headers = empData.headers.get("x-pagination");
-  				if (headers != null) {
-  					const myJson = JSON.parse(headers);
-  					this.totalData = myJson.totalData;
-  				}
   				return empData.body;
   			})
   		)
   		.subscribe((empData: any) => {
-  			// check data type
   			if (empData != null) {
-  				this.users = empData;
+  				this.users = empData.userInfoModels;
   			}   
   			for ( let i = 0; i < this.users.length; i++) {
   				this.daysService.getUnconfirmedDaysCount(this.users[i].id).subscribe({

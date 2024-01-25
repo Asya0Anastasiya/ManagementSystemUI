@@ -73,7 +73,6 @@ export class AuthService {
 	}
 
 	public async tryRefreshingTokens(token: string, refreshToken: string): Promise<boolean> {
-		debugger
 		if (!token || !refreshToken) { 
 		  return false;
 		}

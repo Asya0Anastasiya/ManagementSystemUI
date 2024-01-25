@@ -1,3 +1,5 @@
+import { DocumentWithSourceId } from "./documentWithSourceId.model";
+
 export interface RowWithDocs {
     date: string;
     hours: number;
@@ -5,5 +7,5 @@ export interface RowWithDocs {
     status: string;
     color: string;
     id: string;
-    docs: string[];
+    docs: DocumentWithSourceId[];
 }

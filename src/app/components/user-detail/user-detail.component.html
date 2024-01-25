@@ -70,8 +70,8 @@
             <mat-form-field>
               <mat-label>Select document</mat-label>
               <mat-select [disabled]="row.status==='No info'">
-                <mat-option  *ngFor="let doc of row.docs" [value]="doc">
-                  {{doc}} &nbsp;&nbsp; <i class="fa fa-solid fa-download fa-lg" (click)="downloadDocument(doc)"></i>
+                <mat-option  *ngFor="let doc of row.docs" [value]="doc.sourceId">
+                  {{doc.name}} &nbsp;&nbsp; <i class="fa fa-solid fa-download fa-lg" (click)="downloadDocument(doc.name, doc.sourceId)"></i>
                 </mat-option>
               </mat-select>
             </mat-form-field>

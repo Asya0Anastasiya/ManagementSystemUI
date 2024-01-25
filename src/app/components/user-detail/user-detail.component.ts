@@ -140,9 +140,9 @@ export class UserDetailComponent implements OnInit {
   		});
   }
 
-  downloadDocument(name: string) {
+  downloadDocument(name: string, documentId: string) {
   	const ext = name.split(".");
-  	this.docService.downloadUserDocument(name, this.userDetails.id).subscribe(response => {
+  	this.docService.downloadUserDocument(documentId, this.userDetails.id).subscribe(response => {
   		const url = window.URL.createObjectURL(new Blob([response]));
   		const link = document.createElement("a");
   		link.href = url;

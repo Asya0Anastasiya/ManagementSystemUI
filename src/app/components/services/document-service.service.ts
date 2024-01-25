@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserDocument } from "src/app/models/document.model";
+import { DocumentInfo } from "src/app/models/documentInfo.model";
 
 @Injectable({
 	providedIn: "root"
@@ -12,8 +13,8 @@ export class DocumentServiceService {
 
 	private baseUrl: string = "https://localhost:44339/";
 
-	downloadUserDocument(fileName: string, userId: string) : Observable<any> {
-		return this.http.get(`${this.baseUrl}downloadUserDocument/${fileName}/${userId}`, { responseType: "blob"});
+	downloadUserDocument(documentId: string, userId: string) : Observable<any> {
+		return this.http.get(`${this.baseUrl}downloadUserDocument/${documentId}/${userId}`, { responseType: "blob"});
 	}
 
 	uploadUserDocument(formData: FormData) {
@@ -24,14 +25,15 @@ export class DocumentServiceService {
 		return this.http.get<UserDocument[]>(`${this.baseUrl}getUserDocuments/${userId}`);
 	}
 
-	getUserDocumentsNames(userId: string) : Observable<string[]> {
-		return this.http.get<string[]>(`${this.baseUrl}getAllUsersTimeTrackingDocs/${userId}`);
+	getUserDocumentsNames(userId: string) : Observable<DocumentInfo[]> {
+		return this.http.get<DocumentInfo[]>(`${this.baseUrl}getAllUsersTimeTrackingDocs/${userId}`);
 	}
 
-	attachDocument(userId: string, date: Date, name: string) {
-		const body = JSON.stringify({ name: name , date: date}); 
+	attachDocument(userId: string, date: Date, documentId: string) {
+		const body = JSON.stringify({ documentId: documentId , date: date}); 
 
 		const headers = new HttpHeaders({ "Content-Type": "application/json" });
+		
 		return this.http.post(`${this.baseUrl}attachDocument/${userId}`, body, {headers});
 	}
 }

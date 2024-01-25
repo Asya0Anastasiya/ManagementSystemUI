@@ -2,6 +2,8 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { DaysAccounting } from "src/app/models/daysAccounting.model";
+import { DocumentInfo } from "src/app/models/documentInfo.model";
+import { DocumentWithSourceId } from "src/app/models/documentWithSourceId.model";
 import { UsersDaysInfo } from "src/app/models/usersDaysInfo.model";
 
 @Injectable({
@@ -41,7 +43,7 @@ export class DaysService {
 		return this.http.delete(`${this.baseUrl}removeDay/${id}`);
 	}
 
-	getUserDocumentsNames(userId: string, params: HttpParams) : Observable<string[]> {
-		return this.http.get<string[]>(`${this.baseUrl}getAttachedUsersTimeTrackingDocumentsNames/${userId}`, {params: params});
+	getUserDocumentsNames(userId: string, params: HttpParams) : Observable<DocumentWithSourceId[]> {
+		return this.http.get<DocumentWithSourceId[]>(`${this.baseUrl}getAttachedUsersTimeTrackingDocuments/${userId}`, {params: params});
 	}
 }
