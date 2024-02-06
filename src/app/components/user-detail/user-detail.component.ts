@@ -114,7 +114,6 @@ export class UserDetailComponent implements OnInit {
   				httpParams = httpParams.set("accountingType", this.daysFilter.accountingType);
   				return this.daysService.getUsersDays(
   					httpParams,
-  					this.paginator.pageIndex + 1, this.paginator.pageSize
   				).pipe(catchError(() => observableOf(null)));
   			}),
   			map((empData) => {

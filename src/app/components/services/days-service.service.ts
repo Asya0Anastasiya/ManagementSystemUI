@@ -23,8 +23,8 @@ export class DaysService {
 		return this.http.get<DaysAccounting>(`${this.baseUrl}approveDay/${id}`);
 	}
 
-	getUsersDays(httpParams: HttpParams, pageNumber: number, pageSize: number) {
-		return this.http.get(`${this.baseUrl}getUsersDays/pageNumber/${pageNumber}/pageSize/${pageSize}`, { observe: "response", params: httpParams });
+	getUsersDays(httpParams: HttpParams) {
+		return this.http.get(`${this.baseUrl}getUsersDays`, { observe: "response", params: httpParams });
 	}
 
 	postDay(dayObj: any) : Observable<DaysAccounting> {
@@ -44,6 +44,6 @@ export class DaysService {
 	}
 
 	getUserDocumentsNames(userId: string, params: HttpParams) : Observable<DocumentWithSourceId[]> {
-		return this.http.get<DocumentWithSourceId[]>(`${this.baseUrl}getAttachedUsersTimeTrackingDocuments/${userId}`, {params: params});
+		return this.http.get<DocumentWithSourceId[]>(`${this.baseUrl}getUsersDocuments/${userId}`, {params: params});
 	}
 }
