@@ -200,7 +200,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   onCheckboxChange(e: any, i: number) {
-    
   	const day: DaysAccounting = {
   		hours: this.rows[i].hours,
   		date: new Date(this.rows[i].date),

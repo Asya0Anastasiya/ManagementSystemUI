@@ -52,7 +52,7 @@
           <tr>
             <th>Name</th>
             <th>Position</th>
-            <th *ngIf="role === 'Admin'">Status</th>
+            <th *ngIf="role === 'Admin' || role === 'DepartmentManager'">Status</th>
             <th>Branch office</th>
             <th>Actions</th>
           </tr>
@@ -72,8 +72,8 @@
               <p class="fw-normal mb-1">{{user.position}}</p>
               <p class="text-muted mb-0">{{user.department}}</p>
             </td>
-            <td *ngIf="role === 'Admin'">
-              <div [matBadge]="user.unConfirmedDaysCount" style="width: 40%;" matBadgePosition="above"
+            <td *ngIf="(role === 'Admin' || role === 'DepartmentManager') && user.id != id">
+              <div *ngIf="role === 'Admin' || (user.department === department && role === 'DepartmentManager')" [matBadge]="user.unConfirmedDaysCount" style="width: 40%;" matBadgePosition="above"
                 matBadgeColor="accent" class="demo-section"><a mat-button [routerLink]="['userDetail', user.id]">Require
                   confirmation</a></div>
             </td>

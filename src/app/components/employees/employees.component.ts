@@ -24,6 +24,7 @@ export class EmployeesComponent implements OnInit {
 	public url: string = "";
 	public id: string = "";
 	public role: string = "";
+	public department: string = "";
 	totalData!: number;
 	searchForm!: FormGroup;
   @ViewChild("paginator") paginator!: MatPaginator;
@@ -46,6 +47,11 @@ export class EmployeesComponent implements OnInit {
   		.subscribe(val => {
   			const roleFromToken = this.auth.getRoleFromToken();
   			this.role = val || roleFromToken;
+  		});
+  	this.userStore.getDepartmentFromStore()
+  		.subscribe(val => {
+  			const departmentFromToken = this.auth.getDepartmentFromToken();
+  			this.department = val || departmentFromToken;
   		});
   }
 
@@ -70,6 +76,7 @@ export class EmployeesComponent implements OnInit {
   		.subscribe((empData: any) => {
   			if (empData != null) {
   				this.users = empData.userInfoModels;
+  				this.totalData = empData.usersCount;
   			}   
   			for ( let i = 0; i < this.users.length; i++) {
   				this.daysService.getUnconfirmedDaysCount(this.users[i].id).subscribe({

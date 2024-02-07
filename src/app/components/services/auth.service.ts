@@ -63,12 +63,18 @@ export class AuthService {
 
 	getRoleFromToken(){
 		if (this.userPayload)
-			return this.userPayload.Role;
+			return this.userPayload.scope;
 	}
 
 	getIdFromToken(){
 		if (this.userPayload){
 			return this.userPayload.nameid;
+		}
+	}
+
+	getDepartmentFromToken(){
+		if (this.userPayload){
+			return this.userPayload.Department;
 		}
 	}
 

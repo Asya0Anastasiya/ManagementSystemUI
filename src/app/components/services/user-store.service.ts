@@ -9,6 +9,7 @@ export class UserStoreService {
 	private email$ = new BehaviorSubject<string>("");
 	private role$ = new BehaviorSubject<string>("");
 	private nameid$ = new BehaviorSubject<string>("");
+	private department$ = new BehaviorSubject<string>("");
 
 	constructor() { }
 
@@ -34,5 +35,13 @@ export class UserStoreService {
 
 	public getIdFromStore(){
 		return this.nameid$.asObservable();
+	}
+
+	public setDepartmentForStore(department: string){
+		this.department$.next(department);
+	}
+
+	public getDepartmentFromStore(){
+		return this.department$.asObservable();
 	}
 }

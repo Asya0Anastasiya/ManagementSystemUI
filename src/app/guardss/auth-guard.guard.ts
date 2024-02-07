@@ -38,7 +38,7 @@ export const authGuard: CanActivateFn = (
 
 export const roleGuard: CanActivateFn = () => {
 	const authService: AuthService = inject(AuthService);
-	const access: boolean = authService.getRoleFromToken() == "Admin";
+	const access: boolean = authService.getRoleFromToken() == "Admin" || authService.getRoleFromToken() == "DepartmentManager";
 	if (access) {
 		return true;
 	} else {
