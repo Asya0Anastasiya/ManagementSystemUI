@@ -1,0 +1,95 @@
+<user-navbar></user-navbar>
+<section class="main h-100">
+  <div class="text-center">
+    <img src="{{editProfileService.url}}" style="width: 185px;" alt="logo" class="img-fluid rounded-pill mt-5">
+
+    <div class=" align-items-center py-3">
+      <div class="col-md-9 pe-5">
+        <input class="form-control form-control-lg" id="formFig" type="file" (change)="editProfileService.onImageSelected($event)"
+          style="width: 17%; color: white; margin-left: 61%;" />
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container py-3 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-3">
+          <div class="row g-0">
+            <div class="col-xl-6 col-lg-6 col-sm-12 d-xl-block my-5 ps-3">
+              <p class="h2 fw-bold  mt-4 "
+                style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', monospace;">EDIT INFO</p>
+
+              <form [formGroup]="editProfileService.editForm">
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1m">First name</label>
+                      <input formControlName="firstname" type="text" id="form3Example1m"
+                        class="form-control form-control-lg" style="width: 70%;" />
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1n">Last name</label>
+                      <input formControlName="lastname" type="text" id="form3Example1n"
+                        class="form-control form-control-lg" style="width: 70%;" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="form-outline flex-fill mb-0">
+                    <label class="form-label" for="form3Example3c">Email</label>
+                    <input formControlName="email" type="email" id="form3Example3c" class="form-control"
+                      style="width: 70%;" />
+                  </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <div class="form-outline flex-fill mb-0">
+                    <label class="form-label" for="form3Example3c">Phone</label>
+                    <input formControlName="phoneNumber" type="email" id="form3Example3c" class="form-control"
+                      style="width: 70%;" />
+                  </div>
+                </div>
+
+                <button (click)="editProfileService.onSubmit()" type="button" class="btn btn-rounded btn-lg btn-green">Save</button>
+              </form>
+
+            </div>
+            <div class="col-xl-6 col-lg-6 col-sm-12">
+              <div class="card-body p-md-5 text-black">
+                <p class="h2 fw-bold mb-5 mt-4 "
+                  style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', monospace;">CHANGE PASSWORD
+                </p>
+                <form [formGroup]="editProfileService.passwordForm">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <label class="form-label" for="form3Example4c"> Old password</label>
+                      <input formControlName="oldPassword" type="password" id="form3Example4c" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <label class="form-label" for="form3Example4cd">New password</label>
+                      <input formControlName="newPassword" type="password" id="form3Example4cd" class="form-control" />
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+              <button (click)="editProfileService.changePassword()" type="button" class="btn btn-rounded btn-lg btn-green ms-5">Change
+                password</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

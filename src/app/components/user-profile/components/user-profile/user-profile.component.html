@@ -1,0 +1,183 @@
+<user-navbar></user-navbar>
+<section style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-8">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex text-black">
+              <div class="flex-shrink-0">
+                <img src="{{userProfileService.url}}" alt="Generic placeholder image" class="img-fluid"
+                  style="width: 180px; border-radius: 10px;" />
+              </div>
+              <div class="flex-grow-1 ms-3 pt-3">
+                <h3 style="font-size: 20px;" class="mt-4 mb-1">{{userProfileService.userDetails.firstName}} {{userProfileService.userDetails.lastName}}</h3>
+                <p class="mb-2 pb-1" style="color: #2b2a2a;">
+                  {{userProfileService.userDetails.email}}
+                </p>
+                <div class="d-flex justify-content-evenly rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                  <div>
+                    <p class="small text-muted mb-1">
+                      Working days
+                    </p>
+                    <p class="mb-0">{{userProfileService.userDetails.workDays}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">
+                      Sick days
+                    </p>
+                    <p class="mb-0">{{userProfileService.userDetails.sickDays}}</p>
+                  </div>
+                  <div>
+                    <p class="small text-muted mb-1">
+                      Paid days
+                    </p>
+                    <p class="mb-0">{{userProfileService.userDetails.paidDays}}</p>
+                  </div>
+                </div>
+                <div class="d-flex pt-1">
+                  <button mat-raised-button style="background-color: #2c584a; color: white; flex-grow: 1!important;">
+                    <a style="text-decoration: none; color: white;" [routerLink]="['documents']">My documents</a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="h-100 h-custom" style="background: linear-gradient(to top, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+  <div class="container py-5 h-100">
+    <div class="container text-center rounded-3  mb-5 pt-3 pb-2 col-8" style="background-color: white;">
+      <h2>{{userProfileService.month}}</h2>
+    </div>
+
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Working Days">
+        <div class="container pt-4" style="max-height: none !important;">
+          <mat-form-field class="mb-0">
+            <mat-label>Select month</mat-label>
+            <mat-select>
+              <mat-option (onSelectionChange)="userProfileService.selectionChange($event, paginator)" *ngFor="let month of userProfileService.months"
+                [value]="month.value">
+                {{month.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <table class="table table-hover align-middle mb-0 mt-0"
+            style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+            <thead class="bg-light">
+              <tr style="text-align: center;">
+                <th> </th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Accounting type</th>
+                <th>Status</th>
+                <th>Attach documents</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of userProfileService.rows; let i = index;" style="text-align: center;">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <input (change)="userProfileService.onCheckboxChange($event, i)" *ngIf="row.status === 'No info'" type="checkbox">
+                  </div>
+                </td>
+                <td>
+                  <label for="exampleDatepicker1" class="form-label">{{row.date}}</label>
+                </td>
+                <td>
+                  <label for="exampleDatepicker1" class="form-label">{{row.hours}}</label>
+                </td>
+                <td>
+                  <label for="exampleDatepicker1" class="form-label">{{row.type}}</label>
+                </td>
+                <td>
+                  <div class="rounded-pill me-5 text-center h-50" style="color: white"
+                    [style.background-color]="row.color">
+                    {{row.status}}
+                  </div>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <mat-label>Select document</mat-label>
+                    <mat-select [disabled]="row.status==='No info'">
+                      <mat-option (onSelectionChange)="userProfileService.attachDocument(doc.value, row.date)" *ngFor="let doc of userProfileService.docs"
+                        [value]="doc.value">
+                        {{doc.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <mat-paginator #paginator [length]="userProfileService.totalData" [pageSizeOptions]="[5, 7, 10, 15]" showFirstLastButtons
+            class=" mb-3"
+            style="border-collapse: collapse; border-end-start-radius: 1em; border-end-end-radius: 1em; overflow: hidden;"></mat-paginator>
+        </div>
+        <div class="ps-3">
+          <button mat-raised-button (click)="userProfileService.onSubmit()">Submit</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Call a sick">
+        <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
+          <div class="col-lg-8 col-xl-6">
+            <div class="card rounded-3">
+              <div class="card-body p-4 p-md-5">
+                <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2" style="font-size: 30px;">Call a sick</h2>
+                <form [formGroup]="userProfileService.sickDayForm" class="px-md-2">
+                  <mat-form-field>
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate formControlName="start" placeholder="Start date">
+                      <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                  <div class="pt-5">
+                    <button (click)="userProfileService.postSickDays()" type="submit"
+                    mat-raised-button style="background-color: #2c584a; color: white; width: 20%;">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Take a Vocation">
+        <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
+          <div class="col-lg-8 col-xl-6">
+            <div class="card rounded-3">
+              <div class="card-body p-4 p-md-5">
+                <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2" style="font-size: 30px;">Take a vocation</h2>
+                <form [formGroup]="userProfileService.vocationsForm" class="px-md-2">
+                  <mat-form-field>
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker1">
+                      <input matStartDate formControlName="start" placeholder="Start date">
+                      <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker1></mat-date-range-picker>
+                  </mat-form-field>
+                  <div class="pt-5">
+                    <button (click)="userProfileService.postVocations()" type="submit"
+                    mat-raised-button style="background-color: #2c584a; color: white; width: 20%;">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</section>
