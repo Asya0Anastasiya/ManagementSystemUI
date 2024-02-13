@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Employee } from "../../shared/types/employee.model";
-import { DaysFiltering } from "src/app/models/daysFiltering.model";
-import { RowWithDocs } from "src/app/models/rowWithDocs.model";
-import { RowData } from "src/app/models/rowData.model";
-import { DaysAccounting } from "src/app/models/daysAccounting.model";
+import { DaysFiltering } from "src/app/components/shared/types/daysFiltering.model";
+import { RowWithDocs } from "src/app/components/user-detail/types/rowWithDocs.model";
+import { RowData } from "src/app/components/shared/types/rowData.model";
+import { DaysAccounting } from "src/app/components/shared/types/daysAccounting.model";
 import { DocumentServiceService } from "../../services/document-service.service";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "../../services/api.service";

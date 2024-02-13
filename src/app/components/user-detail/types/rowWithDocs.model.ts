@@ -1,4 +1,4 @@
-import { DocumentWithSourceId } from "./documentWithSourceId.model";
+import { DocumentWithSourceId } from "../../../models/documentWithSourceId.model";
 
 export interface RowWithDocs {
     date: string;

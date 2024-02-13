@@ -5,17 +5,17 @@ import { UserStoreService } from "../../services/user-store.service";
 import { ApiService } from "../../services/api.service";
 import { AuthService } from "../../services/auth.service";
 import { DaysService } from "../../services/days-service.service";
-import { DocumentInfo } from "src/app/models/documentInfo.model";
-import { SelectDocument } from "src/app/models/selectDocumentOptions.model";
+import { DocumentInfo } from "src/app/components/user-profile/types/documentInfo.model";
+import { SelectDocument } from "src/app/components/user-profile/types/selectDocumentOptions.model";
 import { DocumentServiceService } from "../../services/document-service.service";
-import { DaysFiltering } from "src/app/models/daysFiltering.model";
-import { DaysAccounting } from "src/app/models/daysAccounting.model";
-import { RowData } from "src/app/models/rowData.model";
+import { DaysFiltering } from "src/app/components/shared/types/daysFiltering.model";
+import { DaysAccounting } from "src/app/components/shared/types/daysAccounting.model";
+import { RowData } from "src/app/components/shared/types/rowData.model";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { HttpParams } from "@angular/common/http";
 import { catchError, map, startWith, switchMap, of as observableOf } from "rxjs";
-import { SelectMonthOptions } from "src/app/models/selectOptions.model";
+import { SelectMonthOptions } from "src/app/components/user-profile/types/selectOptions.model";
 
 @Injectable({
 	providedIn: "root"

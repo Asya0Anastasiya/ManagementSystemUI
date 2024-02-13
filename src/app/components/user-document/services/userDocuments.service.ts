@@ -3,7 +3,7 @@ import { UserStoreService } from "../../services/user-store.service";
 import { AuthService } from "../../services/auth.service";
 import { DocumentServiceService } from "../../services/document-service.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserDocument } from "src/app/models/document.model";
+import { UserDocument } from "src/app/components/user-document/types/document.model";
 
 @Injectable({
 	providedIn: "root"
