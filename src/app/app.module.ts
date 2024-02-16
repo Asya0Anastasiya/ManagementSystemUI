@@ -24,7 +24,6 @@ import { HomeComponent } from "./components/home/home.component";
 import { LoginModule } from "./components/login/login.module";
 import { EmployeesModule } from "./components/employees/employees.module";
 import { UserProfileModule } from "./components/user-profile/userProfile.module";
-import { UserDetailModule } from "./components/user-detail/userDetail.module";
 import { EditProfileModule } from "./components/edit-profile/editProfile.module";
 import { SignupModule } from "./components/signup/createUser.module";
 import { UserDocumentModule } from "./components/user-document/userDocuments.module";
@@ -60,7 +59,6 @@ import { NavbarModule } from "./components/shared/modules/navbar/navbar.module";
 		LoginModule,
 		EmployeesModule,
 		UserProfileModule,
-		UserDetailModule,
 		EditProfileModule,
 		SignupModule,
 		UserDocumentModule,

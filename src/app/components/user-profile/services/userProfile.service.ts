@@ -16,6 +16,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { HttpParams } from "@angular/common/http";
 import { catchError, map, startWith, switchMap, of as observableOf } from "rxjs";
 import { SelectMonthOptions } from "src/app/components/user-profile/types/selectOptions.model";
+import { CommonService } from "./common.service";
 
 @Injectable({
 	providedIn: "root"
@@ -23,7 +24,8 @@ import { SelectMonthOptions } from "src/app/components/user-profile/types/select
 
 export class UserProfileService {
 	constructor(private imageService: ImageService, private userStore: UserStoreService, private api: ApiService,
-        private auth: AuthService, private daysService: DaysService, private docService: DocumentServiceService){}
+        private auth: AuthService, private daysService: DaysService, private docService: DocumentServiceService,
+		private commonService: CommonService){}
 
 	now: Date = new Date;
 	month: string = "";
@@ -97,33 +99,16 @@ export class UserProfileService {
 
 	OnInit(): void {
     
-		this.month = this.getCurrentMonth();
+		this.month = this.commonService.getCurrentMonth();
 		this.userStore.getIdFromStore()
 			.subscribe(val => {
 				const idFromToken = this.auth.getIdFromToken();
 				this.id = val || idFromToken;
 			});
-  
-		this.api.getUser(this.id).subscribe({
-			next: (response) => {
-				this.userDetails.id = response.id;
-				this.userDetails.firstName = response.firstName;
-				this.userDetails.lastName = response.lastName;
-				this.userDetails.email = response.email;
-			}
-		});
-  
-		this.daysService.getUsersDaysInfo(this.id, this.now.getMonth() + 1, this.now.getFullYear()).subscribe({
-			next: (res) => {
-				this.userDetails.workDays = res.workDaysCount;
-				this.userDetails.sickDays = res.sickDaysCount;
-				this.userDetails.holidays = res.holidaysCount;
-				this.userDetails.paidDays = res.paidDaysCount;
-			}
-		});
+		this.userDetails = this.commonService.fullfillUserInfo(this.userDetails, this.id);
   
 		this.url = this.imageService.initiateUserImage(this.id, this.api);
-		this.initiateDayFilteringParams(this.id, "");
+		this.daysFilter = this.commonService.initiateDayFilteringParams(this.id, "", this.daysFilter);
 		this.docService.getUserDocumentsNames(this.id).subscribe((res: DocumentInfo[]) => {
 			for (let i = 0; i < res.length; i++) {
 				const doc: SelectDocument = {
@@ -210,19 +195,9 @@ export class UserProfileService {
 		if (event.isUserInput) {
 			this.now.setMonth(event.source.value - 1);
 			this.defineIndex();
-			this.initiateDayFilteringParams(this.id, "");
+			this.daysFilter = this.commonService.initiateDayFilteringParams(this.id, "", this.daysFilter);
 			this.AfterViewInit(paginator);
 		}    
-	}
-
-	initiateRowsData(start: number, end: number) {
-		for (let i = 0; i < end; i++) {  
-			this.rows[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
-			this.rows[i].hours = 8;
-			this.rows[i].type = "";
-			this.rows[i].color = "#cbc327";
-			this.rows[i].status = "No info";
-		}
 	}
   
 	initiateRows(count:number) {
@@ -328,28 +303,6 @@ export class UserProfileService {
 		}
 	}
 
-	initiateDayFilteringParams(userId: string, accountingType: string) {
-		if (this.now.getDate() <= 5) {
-			this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
-			this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
-		}
-		else if (this.now.getDate() >= 26) {
-			this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), 26);
-			this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), 31);
-		}
-		else {
-			this.daysFilter.fromDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate() - 2);
-			this.daysFilter.tillDate = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate() + 2);
-		}
-		this.daysFilter.userId = userId;
-		this.daysFilter.accountingType = accountingType;
-	}
-
-	getCurrentMonth() : string {
-		const months = ["January", "Febriary", "March", "April", "May", "June", "Jule", "Aughust", "September", "October", "November"];
-		return months[this.now.getMonth()];
-	}
-
 	AfterViewInit(paginator: MatPaginator) {
 		paginator.page
 			.pipe(
@@ -392,12 +345,12 @@ export class UserProfileService {
 					this.rows = [];
 					if (this.start > 26) {
 						this.initiateRows(this.totalData % paginator.pageSize);
-						this.initiateRowsData(this.start, this.totalData % paginator.pageSize);
+						this.rows = this.commonService.initiateRowsData(this.start, this.totalData % paginator.pageSize, this.rows);
 						this.checkDates(this.totalData % paginator.pageSize);
 					}
 					else {
 						this.initiateRows(paginator.pageSize);
-						this.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize);
+						this.rows = this.commonService.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize, this.rows);
 						this.checkDates(paginator.pageSize);
 					}       
 				}      

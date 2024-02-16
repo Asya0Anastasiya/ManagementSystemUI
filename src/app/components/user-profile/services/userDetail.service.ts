@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Employee } from "../../shared/types/employee.model";
 import { DaysFiltering } from "src/app/components/shared/types/daysFiltering.model";
-import { RowWithDocs } from "src/app/components/user-detail/types/rowWithDocs.model";
+import { RowWithDocs } from "src/app/components/user-profile/types/rowWithDocs.model";
 import { RowData } from "src/app/components/shared/types/rowData.model";
 import { DaysAccounting } from "src/app/components/shared/types/daysAccounting.model";
 import { DocumentServiceService } from "../../services/document-service.service";
@@ -12,6 +12,7 @@ import { ImageService } from "../../shared/services/image.service";
 import { HttpParams } from "@angular/common/http";
 import { MatPaginator } from "@angular/material/paginator";
 import { catchError, map, startWith, switchMap, of as observableOf } from "rxjs";
+import { CommonService } from "./common.service";
 
 @Injectable({
 	providedIn: "root"
@@ -19,7 +20,7 @@ import { catchError, map, startWith, switchMap, of as observableOf } from "rxjs"
 
 export class UserDetailService {
 
-	constructor(private api: ApiService, 
+	constructor(private api: ApiService, private commonService: CommonService,
         private daysService: DaysService,
         private docService: DocumentServiceService, private imageService: ImageService) {}
 
@@ -60,28 +61,13 @@ export class UserDetailService {
 	public url: string = "";
 
 	OnInit(route: ActivatedRoute): void {
-		this.month = this.getCurrentMonth();
+		this.month = this.commonService.getCurrentMonth();
 		route.paramMap.subscribe({
 			next: (params) =>{
 				const id = params.get("id");
 				if (id){
-					this.initiateDayFilteringParams(id, "");
-					this.api.getUser(id).subscribe({
-						next: (response) => {
-							this.userDetails.id = response.id;
-							this.userDetails.firstName = response.firstName;
-							this.userDetails.lastName = response.lastName;
-							this.userDetails.email = response.email;
-						}
-					});
-					this.daysService.getUsersDaysInfo(id, this.now.getMonth() + 1, this.now.getFullYear()).subscribe({
-						next: (res) => {
-							this.userDetails.workDays = res.workDaysCount;
-							this.userDetails.sickDays = res.sickDaysCount;
-							this.userDetails.holidays = res.holidaysCount;
-							this.userDetails.paidDays = res.paidDaysCount;
-						}
-					});
+					this.daysFilter = this.commonService.initiateDayFilteringParams(id, "", this.daysFilter);
+					this.userDetails = this.commonService.fullfillUserInfo(this.userDetails, id);
 					this.url = this.imageService.initiateUserImage(id, this.api);
 				}
 			}
@@ -139,7 +125,7 @@ export class UserDetailService {
 						next: (params) =>{
 							const id = params.get("id");
 							if (id){
-								this.initiateDayFilteringParams(id, "");
+								this.daysFilter = this.commonService.initiateDayFilteringParams(id, "", this.daysFilter);
 								this.api.getUser(id).subscribe({
 									next: (response) => {
 										this.userDetails.id = response.id;
@@ -174,7 +160,7 @@ export class UserDetailService {
 					this.rows = [];
 					this.rows1 = [];
 					this.initiateRows(paginator.pageSize);
-					this.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize);
+					this.rows = this.commonService.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize, this.rows);
 					this.checkDates(paginator.pageSize);
 				}      
 			});
@@ -188,7 +174,6 @@ export class UserDetailService {
 				if (rowDay.getDate() === asd.getDate()){
 					let params = new HttpParams();
 					params = params.set("date", `${rowDay.getFullYear()}-${rowDay.getMonth() + 1}-${rowDay.getDate()}`);
-					// attached docs
 					this.daysService.getUserDocumentsNames(this.userDetails.id, params).subscribe({
 						next: res => {
 							this.rows1[i].docs = res;
@@ -218,17 +203,6 @@ export class UserDetailService {
 		}
 	}
 
-	initiateRowsData(start: number, end: number){
-		for (let i = 0; i < end; i++){
-        
-			this.rows1[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
-			this.rows1[i].hours = 8;
-			this.rows1[i].type = "";
-			this.rows1[i].color = "#cbc327";
-			this.rows1[i].status = "No info";
-		}
-	}
-
 	approveDay(id: string) {
 		this.daysService.approveDay(id).subscribe({
 			next: () =>
@@ -244,29 +218,5 @@ export class UserDetailService {
 			}
 		});
 		window.location.reload();
-	}
-
-	initiateDayFilteringParams(userId: string, accountingType: string){
-		const now = new Date();
-		if (now.getDate() <= 5) {
-			this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), 1);
-			this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), 1);
-		}
-		else if (now.getDate() >= 26) {
-			this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), 26);
-			this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), 31);
-		}
-		else {
-			this.daysFilter.fromDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-			this.daysFilter.tillDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2);
-		}
-		this.daysFilter.userId = userId;
-		this.daysFilter.accountingType = accountingType;
-	}
-
-	getCurrentMonth() : string {
-		const now = new Date();
-		const months = ["January", "Febriary", "March", "April", "May", "June", "Jule", "Aughust", "September", "October", "November"];
-		return months[now.getMonth()];
 	}
 }

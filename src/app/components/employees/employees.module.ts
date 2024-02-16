@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { EmployeesComponent } from "./components/employees/employees.component";
-import { authGuard } from "src/app/guardss/auth-guard.guard";
+import { authGuard } from "src/app/guards/auth.guard";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatBadgeModule } from "@angular/material/badge";

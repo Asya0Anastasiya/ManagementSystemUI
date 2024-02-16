@@ -74,7 +74,7 @@ export class EmployeesService {
   			const idFromToken = this.auth.getIdFromToken();
   			this.id = val || idFromToken;
   		});
-
+		
   	this.userStore.getRoleFromStore()
   		.subscribe(val => {
   			const roleFromToken = this.auth.getRoleFromToken();

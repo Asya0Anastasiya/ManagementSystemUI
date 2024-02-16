@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { authGuard } from "src/app/guardss/auth-guard.guard";
+import { authGuard } from "src/app/guards/auth.guard";
 import { UserDocumentComponent } from "./components/user-documents/user-document.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NavbarModule } from "../shared/modules/navbar/navbar.module";
