@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
 	}
 
 	hideShowPass(){
-		this.isText = !this.isText;
-		this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
-		this.isText ? this.type = "text" : this.type = "password";
+		// this.isText = !this.isText;
+		// this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
+		// this.isText ? this.type = "text" : this.type = "password";
 	}
 
 	onLogin() {
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 						this.router.navigate(["profile", tokenPayload.nameid]);
 					}),
 					error: (err => {
-						alert(err?.error);
+						//alert(err?.error);
 					})
 				});
 		} else{

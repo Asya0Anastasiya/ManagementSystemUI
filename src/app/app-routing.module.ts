@@ -13,7 +13,7 @@ import { HomeComponent } from "./components/home/home.component";
 
 const routes: Routes = [
 	{path: "login", component: LoginComponent},
-	{path: "signup", component: SignupComponent, canActivate: [authGuard, roleGuard]},
+	{path: "signup", component: SignupComponent, canActivate: [authGuard]},
 	{path: "employees", component: EmployeesComponent, canActivate: [authGuard]},
 	{path: "employees/userDetail/:id", component: UserDetailComponent, canActivate: [authGuard, roleGuard]},
 	{path: "profile/:id", component: UserProfileComponent, canActivate: [authGuard]},

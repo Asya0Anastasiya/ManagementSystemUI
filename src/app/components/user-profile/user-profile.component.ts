@@ -52,6 +52,7 @@ export class UserProfileComponent implements OnInit {
 		email: "",
 		department: "",
 		position: "",
+		role: "",
 		branchOffice: "",
 		unConfirmedDaysCount: 0,
 		phoneNumber: "",

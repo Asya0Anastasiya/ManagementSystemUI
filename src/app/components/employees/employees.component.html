@@ -3,9 +3,12 @@
 <body class="pb-3 h-100">
   <section class="vh-100">
     <div class="container pt-5">
-      <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team <button mat-raised-button
+      <!-- <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team <button mat-raised-button
           *ngIf="role === 'Admin'" (click)="createEmployee()" style="margin-left:65%; font-size: 20px">Add an
-          employee</button></h2>
+          employee</button></h2> -->
+          <h2 class="mb-4" style="color: white; font-size: 50px;">Our Team <button mat-raised-button
+            (click)="createEmployee()" style="margin-left:65%; font-size: 20px">Add an
+            employee</button></h2>
       <mat-expansion-panel style="border-collapse: collapse; border-radius: 1em; overflow: hidden;">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -52,7 +55,8 @@
           <tr>
             <th>Name</th>
             <th>Position</th>
-            <th *ngIf="role === 'Admin' || role === 'DepartmentManager'">Status</th>
+            <!-- <th *ngIf="role === 'Admin' || role === 'DepartmentManager'">Status</th> -->
+            <th>Status</th>
             <th>Branch office</th>
             <th>Actions</th>
           </tr>
@@ -72,8 +76,13 @@
               <p class="fw-normal mb-1">{{user.position}}</p>
               <p class="text-muted mb-0">{{user.department}}</p>
             </td>
-            <td *ngIf="((role === 'Admin' && user.role != 'Admin') || (role === 'DepartmentManager' && user.role != 'Admin')) && user.id != id">
+            <!-- <td *ngIf="((role === 'Admin' && user.role != 'Admin') || (role === 'DepartmentManager' && user.role != 'Admin')) && user.id != id">
               <div *ngIf="role === 'Admin' || (user.department === department && role === 'DepartmentManager')" [matBadge]="user.unConfirmedDaysCount" style="width: 40%;" matBadgePosition="above"
+                matBadgeColor="accent" class="demo-section"><a mat-button [routerLink]="['userDetail', user.id]">Require
+                  confirmation</a></div>
+            </td> -->
+            <td>
+              <div [matBadge]="user.unConfirmedDaysCount" style="width: 40%;" matBadgePosition="above"
                 matBadgeColor="accent" class="demo-section"><a mat-button [routerLink]="['userDetail', user.id]">Require
                   confirmation</a></div>
             </td>

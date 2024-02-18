@@ -24,6 +24,7 @@ export class UserInfoComponent implements OnInit {
 		email: "",
 		department: "",
 		position: "",
+		role: "",
 		branchOffice: "",
 		unConfirmedDaysCount: 0,
 		phoneNumber: "",

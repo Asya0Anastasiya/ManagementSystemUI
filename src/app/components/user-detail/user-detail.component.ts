@@ -31,6 +31,7 @@ export class UserDetailComponent implements OnInit {
 		department: "",
 		position: "",
 		branchOffice: "",
+		role: "",
 		unConfirmedDaysCount: 0,
 		phoneNumber: "",
 		workDays: 0,

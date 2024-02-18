@@ -61,10 +61,10 @@ export class EditProfileComponent implements OnInit {
 			this.api.updateUser(this.editForm.value)
 				.subscribe({
 					next: (() => {
-						window.location.reload();
+						//window.location.reload();
 					}),
 					error: (err => {
-						alert(err?.error);
+						//alert(err?.error);
 					})
 				});
       
@@ -93,9 +93,12 @@ export class EditProfileComponent implements OnInit {
 		this.api.changePassword(changePassModel).subscribe({
 			next: () => {
 				window.location.reload();
-			}
+			},
+			error: (err => {
+				//alert(err?.error);
+			})
 		});
-		window.location.reload();
+		//window.location.reload();
 	}
 
 	selectedFile!: File;
