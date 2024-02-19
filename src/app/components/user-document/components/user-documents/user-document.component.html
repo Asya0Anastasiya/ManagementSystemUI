@@ -1,0 +1,53 @@
+<user-navbar></user-navbar>
+<section class="vh-100 pt-4 px-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+    <h2 class="my-5" style="color: white; font-size: 50px; text-align: center;">Store your documents here</h2>
+    <table class="table table-hover align-middle mb-0 mt-3"
+        style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
+        <thead>
+            <tr>
+                <th class="ps-5">Title</th>
+                <th>Size</th>
+                <th>Content type</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let document of userDocsService.documents">
+                <th class="ps-5"><i class="fa-solid fa-file fa-lg"></i> {{document.name}}</th>
+                <th>{{document.size}} KB</th>
+                <th>{{document.contentType}}</th>
+                <th><button mat-raised-button style="background-color: #2c584a; color: white;"
+                        (click)="userDocsService.downloadDocument(document.name)">Download</button></th>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <div class="d-flex justify-content-evenly">
+        <form [formGroup]="userDocsService.uploadForm" class="row row-cols-lg-auto g-3 align-items-center mt-4"
+            style="margin-right: 0;">
+            <span class="fs-2" style="color: aliceblue;">Upload document: </span>
+            <div class="col-12">
+                <div class="input-group">
+                    <input formControlName="uploadFile" class="form-control form-control-lg" id="formFig" type="file"
+                        (change)="userDocsService.onDocumentSelected($event)" style="width: 17%;" />
+                </div>
+            </div>
+
+            <div class="col-12 d-flex align-items-center" style="height: 100%;">
+                <span class="fs-3" style="color: aliceblue;">Choose type: </span>
+                <select formControlName="type" class="form-select" style="height: 65%;">
+                    <option value="1">Time tracking</option>
+                    <option value="2">Other</option>
+                </select>
+            </div>
+
+            <div class="col-12 d-flex align-items-center" style="height: 100%;">
+                <button type="submit" mat-raised-button style="background-color: #2c584a; height: 65%; color: white;"
+                    (click)="userDocsService.onSubmitForm()">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</section>
