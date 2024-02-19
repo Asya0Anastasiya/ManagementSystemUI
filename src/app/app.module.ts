@@ -29,7 +29,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { UserDocumentComponent } from "./components/user-document/user-document.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from "./components/home/home.component";
+import { ChatComponent } from "./components/chat/chat.component";
 
 @NgModule({
 	declarations: [
@@ -43,7 +44,8 @@ import { HomeComponent } from './components/home/home.component';
 		EditProfileComponent,
 		UserInfoComponent,
 		UserDocumentComponent,
-  HomeComponent,
+		HomeComponent,
+		ChatComponent
 	],
 	imports: [
 		BrowserModule,

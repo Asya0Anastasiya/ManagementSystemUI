@@ -10,6 +10,7 @@ import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { UserDocumentComponent } from "./components/user-document/user-document.component";
 import { authGuard, roleGuard } from "./guardss/auth-guard.guard";
 import { HomeComponent } from "./components/home/home.component";
+import { ChatComponent } from "./components/chat/chat.component";
 
 const routes: Routes = [
 	{path: "login", component: LoginComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
 	{path: "edit/:id", component: EditProfileComponent, canActivate: [authGuard]},
 	{path: "employees/userInfo/:id", component: UserInfoComponent, canActivate: [authGuard]},
 	{path: "profile/:id/documents", component: UserDocumentComponent, canActivate: [authGuard]},
-	{path: "home", component: HomeComponent}
+	{path: "home", component: HomeComponent},
+	{path: "chat", component: ChatComponent}
 ];
 
 @NgModule({
