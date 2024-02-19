@@ -24,6 +24,7 @@ export class EmployeesService {
 	public users: Employee[] = [];
 	public url: string = "";
 	public id: string = "";
+	public department: string = "";
 	public role: string = "";
 	totalData!: number;
 	searchForm!: FormGroup;
@@ -49,6 +50,7 @@ export class EmployeesService {
   		.subscribe((empData: any) => {
   			if (empData != null) {
   				this.users = empData.userInfoModels;
+				  this.totalData = empData.usersCount;
   			}   
   			for ( let i = 0; i < this.users.length; i++) {
   				this.daysService.getUnconfirmedDaysCount(this.users[i].id).subscribe({
@@ -79,6 +81,12 @@ export class EmployeesService {
   		.subscribe(val => {
   			const roleFromToken = this.auth.getRoleFromToken();
   			this.role = val || roleFromToken;
+  		});
+
+		this.userStore.getDepartmentFromStore()
+  		.subscribe(val => {
+  			const departmentFromToken = this.auth.getDepartmentFromToken();
+  			this.department = val || departmentFromToken;
   		});
 	}
 

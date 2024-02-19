@@ -4,6 +4,7 @@ export interface Employee {
     lastName: string;
     email: string;
     department: string;
+    role: string;
     position: string;
     branchOffice: string;
     unConfirmedDaysCount: number;
