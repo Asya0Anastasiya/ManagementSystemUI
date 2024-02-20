@@ -31,6 +31,7 @@ export class UserDetailService {
 		email: "",
 		department: "",
 		position: "",
+		role: "",
 		branchOffice: "",
 		unConfirmedDaysCount: 0,
 		phoneNumber: "",

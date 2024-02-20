@@ -29,11 +29,12 @@ import { SignupModule } from "./components/signup/createUser.module";
 import { UserDocumentModule } from "./components/user-document/userDocuments.module";
 import { UserInfoModule } from "./components/user-info/userInfo.module";
 import { NavbarModule } from "./components/shared/modules/navbar/navbar.module";
+import { ChatModule } from "./components/chat/chat.module";
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomeComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -63,7 +64,8 @@ import { NavbarModule } from "./components/shared/modules/navbar/navbar.module";
 		SignupModule,
 		UserDocumentModule,
 		UserInfoModule,
-		NavbarModule
+		NavbarModule,
+		ChatModule
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,
