@@ -31,6 +31,7 @@
             ],
             "scripts": [],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css"
             ]
           },

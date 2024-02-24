@@ -7,6 +7,7 @@ import { NavbarModule } from "../shared/modules/navbar/navbar.module";
 import { ChatInputComponent } from "./components/chat-input/chat-input.component";
 import { FormsModule } from "@angular/forms";
 import { MessagesComponent } from './components/messages/messages.component';
+import { PrivateChatComponent } from './components/private-chat/private-chat.component';
 
 const routes: Routes = [
 	{path: "chat", component: ChatComponent, canActivate: [authGuard]}
@@ -14,7 +15,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [CommonModule, RouterModule.forChild(routes), NavbarModule, FormsModule],
-	declarations: [ChatComponent, ChatInputComponent, MessagesComponent]
+	declarations: [ChatComponent, ChatInputComponent, MessagesComponent, PrivateChatComponent]
 })
 
 export class ChatModule {}

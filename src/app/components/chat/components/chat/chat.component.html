@@ -10,6 +10,7 @@
                                 class="btn card-text btn-block"
                                 [ngClass]="{'btn-success' : user === chatService.user.name, 
                                 'btn-dark' : user !== chatService.user.name}"
+                                (dblclick)="chatService.openPrivateChat(user)"
                                 [disabled]="user === chatService.user.name">{{user}}
                             </button>
                         </div>
