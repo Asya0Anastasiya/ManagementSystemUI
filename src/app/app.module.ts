@@ -30,7 +30,8 @@ import { UserDocumentModule } from "./components/user-document/userDocuments.mod
 import { UserInfoModule } from "./components/user-info/userInfo.module";
 import { NavbarModule } from "./components/shared/modules/navbar/navbar.module";
 import { ChatModule } from "./components/chat/chat.module";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { RequestsModule } from "./components/requests/requests.module";
 
 @NgModule({
 	declarations: [
@@ -67,7 +68,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 		UserInfoModule,
 		NavbarModule,
 		ChatModule,
-  NgbModule
+		RequestsModule,
+		NgbModule
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,

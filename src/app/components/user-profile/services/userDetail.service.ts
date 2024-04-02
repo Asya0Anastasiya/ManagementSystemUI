@@ -13,6 +13,11 @@ import { HttpParams } from "@angular/common/http";
 import { MatPaginator } from "@angular/material/paginator";
 import { catchError, map, startWith, switchMap, of as observableOf } from "rxjs";
 import { CommonService } from "./common.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { EditPermissionsComponent } from "../components/edit-permissions/edit-permissions.component";
+import { ChangePermissionModel } from "../types/changePermission.model";
+import { AuthService } from "../../services/auth.service";
+import { ChangePositionModel } from "../types/changePosition.model";
 
 @Injectable({
 	providedIn: "root"
@@ -21,7 +26,7 @@ import { CommonService } from "./common.service";
 export class UserDetailService {
 
 	constructor(private api: ApiService, private commonService: CommonService,
-        private daysService: DaysService,
+        private daysService: DaysService, private modalService: NgbModal, private auth: AuthService,
         private docService: DocumentServiceService, private imageService: ImageService) {}
 
 	userDetails: Employee = {
@@ -161,10 +166,21 @@ export class UserDetailService {
 					this.rows = [];
 					this.rows1 = [];
 					this.initiateRows(paginator.pageSize);
-					this.rows = this.commonService.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize, this.rows);
+					this.initiateRowsData(paginator.pageSize * (paginator.pageIndex + 1) - (paginator.pageSize - 1), paginator.pageSize);
 					this.checkDates(paginator.pageSize);
 				}      
 			});
+	}
+
+	initiateRowsData(start: number, end: number){
+		for (let i = 0; i < end; i++){
+		
+			this.rows1[i].date = `${this.now.getFullYear()}-${this.now.getMonth() + 1}-${start + i}`;
+			this.rows1[i].hours = 8;
+			this.rows1[i].type = "";
+			this.rows1[i].color = "#cbc327";
+			this.rows1[i].status = "No info";
+		}
 	}
 
 	checkDates(count: number) {
@@ -219,5 +235,39 @@ export class UserDetailService {
 			}
 		});
 		window.location.reload();
+	}
+
+	openEditPermissionsWindow() {
+		this.modalService.open(EditPermissionsComponent, { centered: true });
+	}
+
+	selectedRole: number = 0;
+	selectedPositionId : string = "";
+
+	roleSelectionChange(event: any){
+		const adminId = this.auth.getIdFromToken();
+		const permissions = new ChangePermissionModel(this.userDetails.id, adminId, this.selectedRole);
+		this.api.changeUserPermissions(permissions).subscribe({
+			next: () => {
+				window.location.reload();
+			},
+			error: (err) => {
+				console.log(err);
+			}
+		});
+	}
+  
+	positionSelectionChange(event: any) {
+		const adminId = this.auth.getIdFromToken();
+		const position = new ChangePositionModel(this.userDetails.id, adminId, this.selectedPositionId);
+
+		this.api.changeUserPosition(position).subscribe({
+			next: () => {
+				window.location.reload();
+			},
+			error: (err) => {
+				console.log(err);
+			}
+		});	
 	}
 }

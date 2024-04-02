@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Employee } from "src/app/components/shared/types/employee.model";
 import { Observable } from "rxjs";
 import { ChangePassword } from "src/app/components/edit-profile/types/changePassword.model";
+import { ChangePermissionModel } from "../user-profile/types/changePermission.model";
+import { ChangePositionModel } from "../user-profile/types/changePosition.model";
 
 @Injectable({
 	providedIn: "root"
@@ -40,5 +42,13 @@ export class ApiService {
 
 	changePassword(changePasswordModel: ChangePassword) {
 		return this.http.put(`${this.baseUrl}changePassword`, changePasswordModel);
+	}
+
+	changeUserPermissions(changePermissionModel: ChangePermissionModel) {
+		return this.http.post(`${this.baseUrl}changeUserPermissions`, changePermissionModel);
+	}
+
+	changeUserPosition(changePositionModel: ChangePositionModel) {
+		return this.http.post(`${this.baseUrl}changeUserPosition`, changePositionModel);
 	}
 }

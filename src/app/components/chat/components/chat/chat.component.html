@@ -7,11 +7,11 @@
                     <div class="col">
                         <div class="d-grid">
                             <button type="button" 
-                                class="btn card-text btn-block"
-                                [ngClass]="{'btn-success' : user === chatService.user.name, 
-                                'btn-dark' : user !== chatService.user.name}"
+                                
+                                [ngClass]="{'btn-success' : user === chatService.user.email, 
+                                'btn-dark' : user !== chatService.user.email}"
                                 (dblclick)="chatService.openPrivateChat(user)"
-                                [disabled]="user === chatService.user.name">{{user}}
+                                [disabled]="user === chatService.user.email">{{user}}
                             </button>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
         <div class="card border-secondary">
             <div class="card-header h3 text-muted text-center">Messages</div>
             <div class="card-body" style="min-height: 500px;">
-                <messages [messages]="chatService.messages"></messages>
+                <!-- <messages [messages]="chatService.messages"></messages> -->
             </div>
             <div class="card-footer">
                 <chat-input (contentEmitter)="chatService.sendMessage($event)"></chat-input>

@@ -73,6 +73,8 @@ export class CommonService {
 				userDetails.firstName = response.firstName;
 				userDetails.lastName = response.lastName;
 				userDetails.email = response.email;
+				userDetails.role = response.role;
+				userDetails.position = response.position;
 			}
 		});
 		this.daysService.getUsersDaysInfo(id, now.getMonth() + 1, now.getFullYear()).subscribe({

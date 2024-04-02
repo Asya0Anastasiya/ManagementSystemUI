@@ -8,7 +8,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 })
 export class ChatInputComponent {
 
-  @Output() contentEmitter = new EventEmitter();
+  @Output() contentEmitter = new EventEmitter<string>();
   content: string = "";
 
   constructor() {}

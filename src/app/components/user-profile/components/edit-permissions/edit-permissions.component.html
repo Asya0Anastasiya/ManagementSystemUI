@@ -1,0 +1,40 @@
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update user's permissions</h4>
+        <button type="button" class="btn-close" aria-label="Close"
+          (click)="activeModal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="p-5">
+          <div>
+            <p>Choose new role
+              <!-- <mat-form-field class="mb-0"> -->
+                <!-- <mat-label>Roles</mat-label> -->
+                <select [(ngModel)]="userDetailService.selectedRole" (ngModelChange)="userDetailService.roleSelectionChange($event)" class="form-select form-select-lg mb-3">
+                  <option
+                    *ngFor="let role of roles" [value]="role.value">
+                    {{role.viewValue}}
+                  </option>
+                </select>
+              <!-- </mat-form-field> -->
+            </p>
+          </div>
+          <div>
+            <p>Choose new position
+              <!-- <mat-form-field class="mb-0"> -->
+                <!-- <mat-label>Positions</mat-label> -->
+                <select class="form-select form-select-lg mb-3">
+                  <option (onSelectionChange)="userDetailService.positionSelectionChange(position.value)" *ngFor="let position of positions"
+                    [value]="position.value">
+                    {{position.viewValue}}
+                  </option>
+                </select>
+              <!-- </mat-form-field> -->
+            </p>
+          </div>
+          <div class="row">
+          </div>
+        </div>
+      </div>
+
+

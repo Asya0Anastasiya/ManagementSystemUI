@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { Message } from "../../types/message.model";
+import { Component, Input,  } from "@angular/core";
+import { RequestMessage } from "src/app/components/requests/types/requestMessage.model";
 
 @Component({
 	selector: "messages",
@@ -8,7 +8,7 @@ import { Message } from "../../types/message.model";
 })
 export class MessagesComponent {
 
-  @Input() messages: Message[] = [];
+	@Input() messages: RequestMessage[] = [];
 
-  constructor() {}
+	constructor() {}
 }

@@ -1,7 +1,7 @@
 export class UserToChat {
-	name: string;
+	email: string;
 
-	constructor(name: string) {
-		this.name = name;
+	constructor(email: string) {
+		this.email = email;
 	}
 }

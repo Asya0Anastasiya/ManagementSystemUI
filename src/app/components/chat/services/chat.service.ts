@@ -6,6 +6,8 @@ import { UserToChat } from "../types/userToChat.model";
 import { Message } from "../types/message.model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrivateChatComponent } from "../components/private-chat/private-chat.component";
+import { RequestMessage } from "../../requests/types/requestMessage.model";
+import { NewRequestMessage } from "../types/newRequestMessage.model";
 
 @Injectable({
 	providedIn: "root"
@@ -16,14 +18,18 @@ export class ChatService {
 		this.user = new UserToChat(this.auth.getEmailFromToken());
 	}
 
+	producerEmail: string ="";
+	receiverEmail: string = "";
+
 	private chatConnection?: HubConnection;
 	onlineUsers: string[] = [];
-	messages: Message[] = [];
-	privateMessages: Message[] = [];
+	privateMessages: RequestMessage[] = [];
 	user: UserToChat;
-	privateMessageInitiated: boolean = false;
 
-	onInit() {
+	onInit(producerEmail: string, receiverEmail: string) {
+		this.producerEmail = producerEmail;
+		this.receiverEmail = receiverEmail;
+		this.user = new UserToChat(this.auth.getEmailFromToken());
 		this.registerUser(this.user).subscribe({
 			next: () => {
 				console.log("open chat");
@@ -32,7 +38,6 @@ export class ChatService {
 				alert(err?.error);
 			})
 		});
-
 		this.createChatConnection();
 	}
 
@@ -49,31 +54,23 @@ export class ChatService {
 		});
 
 		this.chatConnection.on("UserConnected", () => {
-			this.addUserConnectionId();
+			this.addUserConnectionId(this.producerEmail, this.receiverEmail);
 		});
 
 		this.chatConnection.on("OnlineUsers", (onlineUsers) => {
 			this.onlineUsers = [...onlineUsers];
 		});
 
-		this.chatConnection.on("NewMessage", (newMessage: Message) => {
-			this.messages = [...this.messages, newMessage];
+		this.chatConnection.on("OpenPrivateChat", (newMessage: RequestMessage) => {
+			this.privateMessages = [...this.privateMessages, newMessage];
+
 		});
 
-		this.chatConnection.on("OpenPrivateChat", (newMessage: Message) => {
-			this.messages = [...this.privateMessages, newMessage];
-			this.privateMessageInitiated = true;
-			const modalRef = this.modalService.open(PrivateChatComponent);
-			modalRef.componentInstance.toUser = newMessage.from;
-		});
-
-		this.chatConnection.on("NewPrivateMessage", (newMessage: Message) => {
+		this.chatConnection.on("NewPrivateMessage", (newMessage: RequestMessage) => {
 			this.privateMessages = [...this.privateMessages, newMessage];
 		});
 
 		this.chatConnection.on("ClosePrivateChat", () => {
-			this.privateMessageInitiated = false;
-			this.privateMessages = [];
 			this.modalService.dismissAll();
 		});
 	}
@@ -84,8 +81,11 @@ export class ChatService {
 		});
 	}
 
+	initiateMessages(messages: RequestMessage[]) {
+		this.privateMessages = messages;
+	}
+
 	openPrivateChat(toUser: string) {
-		debugger
 		const modalRef = this.modalService.open(PrivateChatComponent);
 		modalRef.componentInstance.toUser = toUser;
 	}
@@ -96,40 +96,32 @@ export class ChatService {
 			.catch(error => console.log(error));
 	}
 
-	async sendPrivateMessage(to: string, content: string) {
-		const message: Message = {
-			from: this.user.name,
-			to,
-			content
-		};
-
-		if(!this.privateMessageInitiated) {
-			this.privateMessageInitiated = true;
-
-			return this.chatConnection?.invoke("CreatePrivateChat", message).then(() => {
-				this.privateMessages = [...this.privateMessages, message];
-			})
-				.catch(error => console.log(error));
+	async sendPrivateMessage(sender: string, receiver: string, content: string, requestId: string) {
+		let message: NewRequestMessage;
+		if(sender == this.user.email) {
+			message = new NewRequestMessage(sender, receiver, content, requestId);
+		} else {
+			message = new NewRequestMessage(receiver, sender, content, requestId);
 		}
-		else {
-			return this.chatConnection?.invoke("ReceivePrivateMessage", message)
-				.catch(error => console.log(error));
-		}
+		
+
+		return this.chatConnection?.invoke("ReceivePrivateMessage", message)
+			.catch(error => console.log(error));
 	}
 
-	async addUserConnectionId() {
-		const email = this.auth.getEmailFromToken();
-		return this.chatConnection?.invoke("AddUserConnectionId", email)
+	async addUserConnectionId(producerEmail: string, receiverEmail: string) {
+		return this.chatConnection?.invoke("AddUserConnectionId", producerEmail, receiverEmail)
 			.catch(error => console.log(error));
 	}
 
 	async sendMessage(content: string) {
 		const message: Message = {
-			from: this.user.name,
+			from: this.user.email,
 			content
 		};
 
 		return this.chatConnection?.invoke("ReceiveMessage", message)
-			.catch(error => console.log(error));
+			.catch(error => {console.log(error);
+			});
 	}
 }

@@ -13,6 +13,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatButtonModule } from "@angular/material/button";
 import { NavbarModule } from "../shared/modules/navbar/navbar.module";
 import { UserDetailComponent } from "./components/user-detail/user-detail.component";
+import { EditPermissionsComponent } from "./components/edit-permissions/edit-permissions.component";
 
 const routes: Routes = [
 	{path: "profile/:id", component: UserProfileComponent, canActivate: [authGuard]},
@@ -22,7 +23,7 @@ const routes: Routes = [
 @NgModule({
 	imports: [CommonModule, RouterModule.forChild(routes), MatTableModule, MatTabsModule, FormsModule, 
 		MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatDatepickerModule, ReactiveFormsModule, MatButtonModule, NavbarModule],
-	declarations: [UserProfileComponent, UserDetailComponent]
+	declarations: [UserProfileComponent, UserDetailComponent, EditPermissionsComponent]
 })
 
 export class UserProfileModule{}
