@@ -1,6 +1,6 @@
 <user-navbar></user-navbar>
 <section class="vh-100 pt-4 px-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
-    <h2 class="my-5" style="color: white; font-size: 50px; text-align: center;">Your requests</h2>
+    <h2 class="my-5" style="color: white; font-size: 50px;">Your requests <button mat-raised-button (click)="requestsService.openCreateRequestWindow()" style="margin-left:55%; font-size: 20px;">Create a new request</button></h2>
     <table class="table table-hover align-middle mb-0 mt-3"
         style="border-collapse: collapse; border-start-start-radius: 1em; border-start-end-radius: 1em; overflow: hidden;">
         <thead>

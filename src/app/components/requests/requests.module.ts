@@ -8,15 +8,17 @@ import { RequestsComponent } from "./components/requests/requests.component";
 import { SoftwareRequestComponent } from "./components/software-request/software-request.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ChatModule } from "../chat/chat.module";
+import { CreateRequestComponent } from "./components/create-request/create-request.component";
 
 const routes: Routes = [
 	{ path: "requests/:id", component: RequestsComponent, canActivate: [authGuard] },
-	{ path: "requests/:userId/request/:id", component: SoftwareRequestComponent, canActivate: [authGuard] }
+	{ path: "requests/:userId/request/:id", component: SoftwareRequestComponent, canActivate: [authGuard] },
+	{ path: "requests/:id/createRequest", component: CreateRequestComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({
 	imports: [CommonModule, RouterModule.forChild(routes), MatButtonModule, NavbarModule, ReactiveFormsModule, ChatModule],
-	declarations: [RequestsComponent, SoftwareRequestComponent]
+	declarations: [RequestsComponent, SoftwareRequestComponent, CreateRequestComponent]
 })
 
 export class RequestsModule {}

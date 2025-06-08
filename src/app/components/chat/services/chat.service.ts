@@ -30,19 +30,7 @@ export class ChatService {
 		this.producerEmail = producerEmail;
 		this.receiverEmail = receiverEmail;
 		this.user = new UserToChat(this.auth.getEmailFromToken());
-		this.registerUser(this.user).subscribe({
-			next: () => {
-				console.log("open chat");
-			},
-			error: (err => {
-				alert(err?.error);
-			})
-		});
 		this.createChatConnection();
-	}
-
-	registerUser(user: UserToChat) {
-		return this.httpClient.post("https://localhost:44307/api/chat/register-user", user, {responseType: "text"});
 	}
 
 	createChatConnection() {
