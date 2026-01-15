@@ -58,7 +58,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of employeesService.users; let i = index">
-            <td>
+            <td *ngIf="user.id != employeesService.id">
               <div class="d-flex align-items-center">
                 <img src="{{user.url}}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                 <div class="ms-3">
@@ -67,7 +67,7 @@
                 </div>
               </div>
             </td>
-            <td>
+            <td *ngIf="user.id != employeesService.id">
               <p class="fw-normal mb-1">{{user.position}}</p>
               <p class="text-muted mb-0">{{user.department}}</p>
             </td>
@@ -76,8 +76,8 @@
                 matBadgeColor="accent" class="demo-section"><a mat-button [routerLink]="['userDetail', user.id]">Require
                   confirmation</a></div>
             </td>
-            <td>{{user.branchOffice}}</td>
-            <td>
+            <td *ngIf="user.id != employeesService.id">{{user.branchOffice}}</td>
+            <td *ngIf="user.id != employeesService.id">
               <button type="button" mat-stroked-button color="accent" style="border-color: #0b4c3f;">
                 <a [routerLink]="['userInfo', user.id]" style="text-decoration: none;  color: #0b4c3f;">Details</a>
               </button>

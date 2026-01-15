@@ -12,7 +12,6 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, NavbarModule],
-	//add NavbarComponent to declarations
 	declarations: [EditProfileComponent]
 })
 

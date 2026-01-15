@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Specify the details of the request</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="p-3">
+    <form [formGroup]="createRequestForm">
+      <div class="form-group mb-3" >
+        <label for="exampleFormControlInput1">Computer name</label>
+        <input type="email" class="form-control mt-1" id="exampleFormControlInput1" placeholder="Specify the computer name">
+      </div>
+      <div class="form-group mb-3">
+        <label for="exampleFormControlInput1">Location</label>
+        <input type="email" class="form-control mt-1" id="exampleFormControlInput1" placeholder="Specify the location">
+      </div>
+      <div class="form-group mb-3">
+        <label for="exampleFormControlSelect1">Choose a receiver</label>
+        <select class="form-control mt-1" id="exampleFormControlSelect1">
+          <option *ngFor="let adminName of adminsNames" [value]="adminName">{{adminName}}</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="exampleFormControlTextarea1">Specify additional info</label>
+        <textarea class="form-control mt-1" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+    </form>
+    <div class="row">
+    </div>
+    <button>Create request</button>
+  </div>
+</div>

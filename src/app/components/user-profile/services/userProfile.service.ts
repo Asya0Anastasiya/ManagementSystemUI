@@ -47,6 +47,7 @@ export class UserProfileService {
 		email: "",
 		department: "",
 		position: "",
+		role: "",
 		branchOffice: "",
 		unConfirmedDaysCount: 0,
 		phoneNumber: "",

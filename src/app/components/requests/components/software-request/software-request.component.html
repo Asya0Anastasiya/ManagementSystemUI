@@ -1,0 +1,40 @@
+<user-navbar></user-navbar>
+<section class="vh-100 pt-4 px-5" style="background: linear-gradient(to bottom, #426b5e 30%, #b2e3e0 90%) no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <form [formGroup]="softwareRequestService.softwareForm">
+                    <fieldset disabled>
+                      <legend class="mb-3">Software request</legend>
+                      <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Applying date</label>
+                        <input type="text" formControlName="dateTime" id="disabledTextInput" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Details</label>
+                        <input type="text" formControlName="details" id="disabledTextInput" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Receiver</label>
+                        <input type="text" formControlName="receiver" id="disabledTextInput" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Location</label>
+                        <input type="text" formControlName="location" id="disabledTextInput" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Computer name</label>
+                        <input type="text" formControlName="computerName" id="disabledTextInput" class="form-control">
+                      </div>
+                    </fieldset>
+                  </form>
+            </div>
+            <div class="col-lg-6">
+                <app-private-chat [receiverEmail]="softwareRequestService.receiverEmail" 
+                [senderEmail]="softwareRequestService.senderEmail" 
+                [requestId]="softwareRequestService.requestId"
+                [requestMessages]="softwareRequestService.requestMessages"></app-private-chat>
+            </div>
+        </div>
+    </div>
+</section>
